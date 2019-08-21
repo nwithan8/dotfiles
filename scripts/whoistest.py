@@ -11,16 +11,13 @@ except ImportError:
 from datetime import datetime
 import sys
 
-def isExpired(x_date):
-    return (datetime.now() > x_date[0])
-
 if len(sys.argv) > 1:
 	w = pythonwhois.get_whois(sys.argv[1])
 	print("Creation date: " + w['updated_date'][0].strftime("%b %d, %Y"))
 	print("Updated date: " + w['updated_date'][0].strftime("%b %d, %Y"))
 	print("Expiration date: " + w['expiration_date'][0].strftime("%b %d, %Y"))
 
-	if isExpired(w['expiration_date']):
+	if (datetime.now() > w['expiration_date'][0]):
     		print("DOMAIN IS EXPIRED.")
 	else:
     		print("Not expired.")
