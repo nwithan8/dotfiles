@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# Check creation date, update date and expiration date of a domain using WHOIS
+
 try:
 	import pythonwhois
 except ImportError:
