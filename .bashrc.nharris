@@ -1,0 +1,102 @@
+export BASHRC_GROUPS='easypost'
+
+function rbenv_install_easy() {
+    RUBY_CONFIGURE_OPTS=--with-readline-dir="$(brew --prefix readline)" RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/Cellar/openssl@3/3.0.1 rbenv install -v $1
+}
+
+
+# Load platform-specific user bash files
+# Linux
+[[ $KERNEL == 'Linux' ]] && [[ -s "$HOME/.bashrc.nharris.linux" ]] && source "$HOME/.bashrc.nharris.linux"
+
+# Mac
+[[ $KERNEL == 'Darwin' ]] && [[ -s "$HOME/.bashrc.nharris.mac" ]] && source "$HOME/.bashrc.nharris.mac"
+
+# Aliases
+alias cat="bat"
+
+
+### Transfer files and directories via self-hosted transfer.sh instance
+## Config
+export TRANSFER_SH_URL=""
+
+## Tools
+# Convert directory to zip
+_zip_dir() {
+	cd "$1" && zip -r -q - .
+}
+# Read file contents
+_read_file() {
+	cat "$1"
+}
+# Encrypt a file
+_encrypt_file() {
+	_read_file "$1" | gpg -ac -o-
+}
+_encrypt_dir() {
+	(_zip_dir "$1") | gpg -ac -o-
+}
+# Upload file to transfer.sh instance
+_upload_file() {
+	curl --progress-bar --upload-file "-" "$TRANSFER_SH_URL/$1"
+}
+# Upload encrypted file to transfer.sh instance
+_upload_encrypted_file() {
+	curl -X PUT --upload-file "-" "$TRANSFER_SH_URL/$1"
+}
+
+## Commands
+# Regular transfer
+_transfer(){ 
+	if [ $# -eq 0 ]; then 
+		echo "No arguments specified. Usage: _transfer <file|directory>">&2;
+		return 1;
+	fi;
+	if tty -s; then 
+		file="$1";
+		file_name=$(basename "$file");
+		if [ ! -e "$file" ]; then 
+			echo "$file: No such file or directory">&2;
+			return 1;
+		fi;
+		if [ -d "$file" ]; then 
+			file_name="$file_name.zip";
+			(_zip_dir "$file") | _upload_file "$file_name" | tee /dev/null;
+		else 
+			_read_file "$file" | _upload_file "$file_name" | tee /dev/null;
+		fi;
+	else
+		file_name=$1;
+		_upload_file "$file_name" | tee /dev/null;
+	fi;
+}
+# Encrypted transfer
+_encrypt_transfer() {
+	if [ $# -eq 0 ]; then
+                echo "No arguments specified. Usage: _encrpyt_transfer <file|directory>">&2;
+                return 1;
+        fi;
+        if tty -s; then
+                file="$1";
+                file_name=$(basename "$file");
+                if [ ! -e "$file" ]; then
+                        echo "$file: No such file or directory">&2;
+                        return 1;
+                fi;
+                if [ -d "$file" ]; then
+                        file_name="$file_name.zip" ,;
+                        (_encrypt_dir "$file") | _upload_encrypted_file "$file_name" | tee /dev/null;
+                else
+                        _encrypt_file "$file" | _upload_encrypted_file "$file_name" | tee /dev/null;
+                fi;
+        else
+                file_name=$1;
+                _encrypt_file "$file_name" | _upload_file "$file_name" | tee /dev/null;
+        fi;
+}
+# Download and unencrypt 
+_download_encrypted() {
+	url="$1";
+	file_name=$(basename "$url");
+	curl "$url" | gpg -o- > "$file_name"
+}
