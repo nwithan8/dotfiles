@@ -1,0 +1,21 @@
+# Transfer and copy link to clipboard
+transfer(){
+	_transfer "$1" | pbcopy
+}
+
+# Encrypt, transfer and copy link to clipboard
+transfer_secure() {
+	_encrypt_transfer "$1" | pbcopy
+}
+
+# Download and decrypt a transfer.sh file
+download_transfer() {
+	url=""
+	if [ $# -eq 0 ]; then
+		# Use the clipboard
+		url=$(pbpaste);
+	else
+		url="$1";
+	fi;
+	_download_encrypted "$url";
+}
