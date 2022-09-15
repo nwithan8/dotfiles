@@ -1,0 +1,6 @@
+git
+gh
+rsync
+tree
+alchemist
+clienv
