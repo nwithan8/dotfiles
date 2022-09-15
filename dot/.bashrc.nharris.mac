@@ -2,17 +2,17 @@
 export TRANSFER_SH_URL=""
 
 # Transfer to transfer.sh and copy link to clipboard
-transfer(){
+function transfer(){
 	_transfer "$1" "$TRANSFER_SH_URL" | pbcopy
 }
 
 # Encrypt, transfer to transfer.sh and copy link to clipboard
-transfer_secure() {
+function transfer_secure() {
 	_encrypt_transfer "$1" "$TRANSFER_SH_URL" | pbcopy
 }
 
 # Download a transfer.sh file
-download_transfer() {
+function download_transfer() {
 	url=""
 	if [ $# -eq 0 ]; then
 		# Use the clipboard
@@ -24,7 +24,7 @@ download_transfer() {
 }
 
 # Download and decrypt a transfer.sh file
-download_secure_transfer() {
+function download_secure_transfer() {
 	url=""
 	if [ $# -eq 0 ]; then
 		# Use the clipboard
