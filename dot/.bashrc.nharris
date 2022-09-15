@@ -9,7 +9,7 @@
 
 ## Imports other bash files
 
-export BASHRC_GROUPS='easypost'
+export BASHRC_GROUPS='easypost epnharris'
 
 
 
