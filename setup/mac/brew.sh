@@ -12,7 +12,7 @@ for P in $PACKAGES; do
 done
 
 ## Install second-party packages
-PACKAGES="iterm2"
+PACKAGES="iterm2 powershell"
 for P in $PACKAGES; do
   echo "Installing $P via brew..."
   brew install --cask "$P"
