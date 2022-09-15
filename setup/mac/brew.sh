@@ -5,7 +5,7 @@ echo "Installing brew package manager..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ## Install first-party packages
-PACKAGES="git gh rsync"
+PACKAGES="git gh rsync tree"
 for P in $PACKAGES; do
   echo "Installing $P via brew..."
   brew install "$P"

@@ -52,6 +52,10 @@ for V in $JAVA_VERSIONS; do
   brew install "openjdk@$V"
 done
 
+echo "Installing Java utilities..."
+# Maven
+brew install maven
+
 
 # Go
 echo "Installing Go..."
