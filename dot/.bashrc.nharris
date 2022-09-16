@@ -1,4 +1,4 @@
-## Load platform-specific user bash files
+####### Load platform-specific user bash files
 
 # Linux
 [[ $KERNEL == 'Linux' ]] && [[ -s "$HOME/.bashrc.nharris.linux" ]] && source "$HOME/.bashrc.nharris.linux"
@@ -7,19 +7,31 @@
 
 
 
-## Imports other bash files
+####### Imports other bash files
 
 export BASHRC_GROUPS='easypost epnharris'
 
 
 
-## Aliases
+####### Aliases
 
+# More advanced cat
 alias cat="bat"
 
+# Overload pyenv commands
+if [ `command -v pyenv` ]
+then
+    echo 'Setting pyenv...'
+    eval "$(pyenv init -)"
+fi
+
+# Use pyenv pip rather
+alias pip="python3 -m pip"
+alias pip3="python3 -m pip"
 
 
-## Shortcuts (call directly)
+
+####### Shortcuts (call directly)
 
 # Install rbenv easily
 function rbenv_install_easy() {
@@ -71,7 +83,7 @@ function download_file() {
 
 
 
-## Internal functions (call indirectly)
+####### Internal functions (call indirectly)
 
 # Upload encrypted file to transfer.sh instance
 function _upload_encrypted_file() {
