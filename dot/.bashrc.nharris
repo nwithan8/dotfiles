@@ -13,17 +13,19 @@ export BASHRC_GROUPS='easypost epnharris'
 
 
 
+####### Load modules and plugins
+
+# Load pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+
+
 ####### Aliases
 
 # More advanced cat
 alias cat="bat"
-
-# Overload pyenv commands
-if [ `command -v pyenv` ]
-then
-    echo 'Setting pyenv...'
-    eval "$(pyenv init -)"
-fi
 
 # Use pyenv pip
 alias pip="python3 -m pip"
