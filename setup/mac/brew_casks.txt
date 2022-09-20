@@ -8,7 +8,7 @@ adoptopenjdk
 postman
 visual-studio-code
 visual-studio
-vmware-fusion
+virtualbox
 gimp
 emacs
 freedom
