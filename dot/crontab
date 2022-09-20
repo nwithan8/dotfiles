@@ -1,0 +1,8 @@
+# GLOBAL SETUP
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+# Alchemist
+0 */4 * * * alchemist --update > /dev/null
+15 */4 * * * alchemist --backup > /dev/null
+20 */4 * * * cp "$HOME/alchemist/backup/Brewfile" "$HOME/.dotfiles/src/easypost/Brewfile"

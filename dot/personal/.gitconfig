@@ -1,0 +1,19 @@
+[user]
+	name = Nate Harris
+	email = nwithan8@users.noreply.github.com
+
+[push]
+	autoSetupRemote = true
+
+[pull]
+	rebase = true
+
+[submodule]
+	recurse = true
+
+[init]
+	defaultBranch = master
+
+[credential]
+	helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager-core
