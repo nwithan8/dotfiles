@@ -35,4 +35,5 @@ six
 textblob
 tweepy
 twine
+yt-dlp
 zxcvbn
