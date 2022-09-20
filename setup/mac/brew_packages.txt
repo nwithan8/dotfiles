@@ -4,3 +4,4 @@ rsync
 tree
 alchemist
 clienv
+golangci-lint
