@@ -32,3 +32,4 @@ opus
 rtmpdump
 rclone
 yarn
+telnet
