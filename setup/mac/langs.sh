@@ -6,7 +6,7 @@ echo "Installing programming languages..."
 ## Python
 GLOBAL_PYTHON="3.10.0"
 echo "Installing Python versions..."
-brew install pyenv
+curl https://pyenv.run | bash
 eval "$(pyenv init -)"
 
 PYTHON_VERSIONS="3 3.10 3.9 3.8 3.7" # Install latest of all listed Python versions
