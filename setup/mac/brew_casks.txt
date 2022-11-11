@@ -2,7 +2,7 @@
 adoptopenjdk
 discord
 docker
-dotnet-sdk
+dotnet
 emacs
 freedom
 gimp
