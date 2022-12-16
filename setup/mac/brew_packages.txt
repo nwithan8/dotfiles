@@ -6,9 +6,11 @@ ffmpeg
 gh
 git
 gnupg
+gnu-sed
 go
 golangci-lint
 gradle
+grep
 htop
 jpeg
 jq
