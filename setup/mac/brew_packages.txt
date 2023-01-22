@@ -36,3 +36,4 @@ travis
 tree
 wget
 yarn
+bitwarden-cli
