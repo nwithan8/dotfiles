@@ -36,4 +36,5 @@ travis
 tree
 wget
 yarn
+android-platform-tools
 bitwarden-cli
