@@ -32,6 +32,10 @@ python-dotenv
 requests
 scipy
 sphinx
+sphinx-jsonschema
+sphinx_autodoc_typehints
+sphinx-rtd-theme
+sphinx-pydantic
 segno
 setuptools
 six
