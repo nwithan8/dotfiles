@@ -38,5 +38,4 @@ wget
 yarn
 android-platform-tools
 bitwarden-cli
-sphinx-doc
 docfx
