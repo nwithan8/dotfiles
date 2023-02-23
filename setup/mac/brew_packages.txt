@@ -39,3 +39,4 @@ yarn
 android-platform-tools
 bitwarden-cli
 docfx
+wkhtmltopdf
