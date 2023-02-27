@@ -11,6 +11,9 @@ sh ./brew.sh
 # Install bash-ftw
 sh ./bashftw.sh
 
+# Set up git
+sh ./git.sh
+
 # Set up GitHub
 sh ./github.sh
 
