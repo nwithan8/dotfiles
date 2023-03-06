@@ -2,6 +2,11 @@
 
 # Run post-shell change
 
+REPO_LOCATION=$1
+
+# Set up files
+sh ./files.sh "$REPO_LOCATION"
+
 # Create SSH key
 sh ./keys.sh
 

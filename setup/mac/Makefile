@@ -5,11 +5,7 @@ help:
 ## all - Run all main steps
 all: |
 	shell
-	sh all.sh
-
-## shell - Change ZSH shell to Bash
-shell:
-	zsh shell.sh
+	sh all.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
 
 ## bashftw - Install and set up bash-ftw
 bashftw:
@@ -19,33 +15,49 @@ bashftw:
 brew:
 	sh brew.sh
 
+## extras - Run extra utilities
+extras:
+	sh extras.sh
+
+## files - Copy files to home directory
+files:
+	sh files.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+
+## git - Set up Git
+git:
+	sh git.sh
+
 ## github - Set up GitHub
 github:
 	sh github.sh
 
-## keys - Set up SSH keys
-keys:
-	sh keys.sh
+## ides - Install IDEs
+ides:
+	sh ides.sh
 
 ## jetbrains - Install JetBrains IDEs
 jetbrains:
 	sh jetbrains.sh
 
-## microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
-microsoft:
-	sh microsoft.sh
+## keys - Set up SSH keys
+keys:
+	sh keys.sh
 
 ## langs - Install required programming languages and SDKs
 langs:
 	sh langs.sh
 
+## microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
+microsoft:
+	sh microsoft.sh
+
 ## repos - Clone GitHub repositories
 repos:
 	sh repos.sh
 
-## extras - Run extra utilities
-extras:
-	sh extras.sh
+## shell - Change ZSH shell to Bash
+shell:
+	zsh shell.sh
 
 
 
