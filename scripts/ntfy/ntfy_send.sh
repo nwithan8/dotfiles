@@ -9,7 +9,7 @@ MESSAGE="$3"
 HEADERS_STRING=""
 
 # Parse headers
-# From 4TH argument to end
+# From 4th argument to end
 for i in "${@:4:$#}"; do
   # Append to headers string
   HEADERS_STRING="$HEADERS_STRING -H \"$i\""
@@ -20,4 +20,6 @@ HEADERS_STRING="$(echo -e "${HEADERS_STRING}" | sed -e 's/^[[:space:]]*//' -e 's
 URL="$SERVER/$TOPIC"
 
 # No, we can't quote $HEADERS_STRING, it will mess up the headers passed to curl
-curl -X POST $HEADERS_STRING -d "$MESSAGE" "$URL"
+COMMAND="curl -X POST $HEADERS_STRING -d \"$MESSAGE\" \"$URL\""
+echo "$COMMAND"
+eval "$COMMAND"
