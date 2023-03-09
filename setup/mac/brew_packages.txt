@@ -41,3 +41,4 @@ bitwarden-cli
 docfx
 wkhtmltopdf
 pcp
+pcopy

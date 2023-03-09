@@ -28,7 +28,6 @@ export PATH=$PATH:$GOPATH/bin
 export DOTSCRIPTS="$HOME/.scripts"
 
 
-
 ####### Aliases
 
 # More advanced cat
