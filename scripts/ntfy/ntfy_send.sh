@@ -16,10 +16,10 @@ function usage {
     echo "                  (example: mytopic)"
     echo "  -m string     message to publish"
     echo "                  (example: \"Hello World\")"
-    echo "  -a string     authentication pair (optional)"
+    echo "  -u string     authentication pair (optional)"
     echo "                  (example: username:password)"
-    echo "  -h string...  headers to add to the request (optional), must be comma-separated"
-    echo "                  (example: \"Priority: low\",\"Title: my title\")"
+    echo "  -h string...  headers to add to the request (optional), must be semicolon-separated"
+    echo "                  (example: \"Priority: low\";\"Title: my title\")"
     echo ""
 }
 
@@ -57,8 +57,8 @@ fi
 headers_string=""
 # If headers is set, parse it
 if [[ -n $headers ]]; then
-    # Split the headers string by comma into an array
-    IFS=',' read -ra HEADERS <<< "$headers"
+    # Split the headers string by single-quote-comma-single-quote
+    IFS=";" read -ra HEADERS <<< "$headers"
     # Loop through the headers array
     for header in "${HEADERS[@]}"; do
         headers_string="$headers_string -H $header"
@@ -75,5 +75,5 @@ fi
 url="$server/$topic"
 
 command="curl -X POST $headers_string $auth_string -d \"$message\" \"$url\""
-# echo "$command"
+echo "$command"
 eval "$command"
