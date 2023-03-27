@@ -94,6 +94,16 @@ function download_file() {
     curl "$url"
 }
 
+# Checkout a GitHub PR (without GH CLI)
+function ghpr_checkout() {
+    id="$1"
+    if [ -z "$id" ]; then
+        echo "No PR ID specified. Usage: ghpr_checkout <id>"
+        return 1
+    fi
+    git fetch origin pull/$id/head:pr-$id
+    git checkout pr-$id
+}
 
 
 ####### Internal functions (call indirectly)
