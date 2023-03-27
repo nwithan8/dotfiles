@@ -4,74 +4,22 @@
 echo "Installing programming languages..."
 
 ## Python
-GLOBAL_PYTHON="3.10.0"
-echo "Installing Python versions..."
-curl https://pyenv.run | bash
-eval "$(pyenv init -)"
-
-PYTHON_VERSIONS="3 3.10 3.9 3.8 3.7" # Install latest of all listed Python versions
-for V in $PYTHON_VERSIONS; do
-  echo "Installing Python $V..."
-  pyenv install "$V":latest
-done
-pyenv global "$GLOBAL_PYTHON"
-
+sh langs/python.sh
 
 ## PHP
-PHP_VERSIONS="7.4 8.0 8.1 8.2" # Install latest of all listed PHP versions
-for V in $PHP_VERSIONS; do
-  echo "Installing PHP $V..."
-  brew install shivammathur/php/php@"$V"
-done
-
-echo "Installing PHP utilities..."
-# Composer
-brew install composer
-
+sh langs/php.sh
 
 ## Node
-echo "Installing Node.JS..."
-brew install node
-
+sh langs/node.sh
 
 ## Ruby
-echo "Installing Ruby..."
-brew install rbenv
-eval "$(rbenv init -)"
-# shellcheck disable=SC2016
-echo 'eval "$(rbenv init -)"' | sudo tee -a ~/.bashrc
-rbenv install "$(rbenv install -l | grep -v - | tail -1)" # Install latest version of ruby
-
-echo "Installing Ruby utilities..."
-# Bundler
-gem install bundler
-
+sh langs/ruby.sh
 
 ## Java
-echo "Installing Java versions..."
-JAVA_VERSIONS="8 11 17"
-for V in $JAVA_VERSIONS; do
-  echo "Installing Java $V..."
-  brew install "openjdk@$V"
-done
-
-echo "Installing Java utilities..."
-# Maven
-brew install maven
-
+sh langs/java.sh
 
 # Go
-echo "Installing Go..."
-brew install go
-
+sh langs/go.sh
 
 # .NET
-DOTNET_VERSIONS="Current 7.0 6.0 5.0 3.1"
-echo "Installing C# and .NET..."
-wget https://dot.net/v1/dotnet-install.sh
-chmod +x dotnet-install.sh
-for V in $DOTNET_VERSIONS; do
-  echo "Installing .NET $V..."
-  ./dotnet-install.sh --channel "$V" --verbose
-done
-rm dotnet-install.sh
+sh langs/net.sh

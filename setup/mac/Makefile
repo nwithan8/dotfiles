@@ -47,6 +47,34 @@ keys:
 langs:
 	sh langs.sh
 
+## langs-net - Install .NET SDKs
+langs-net:
+	sh langs/net.sh
+
+## langs-node - Install Node.js and NPM
+langs-node:
+	sh langs/node.sh
+
+## langs-python - Install Python and Pip
+langs-python:
+	sh langs/python.sh
+
+## langs-ruby - Install Ruby and Gems
+langs-ruby:
+	sh langs/ruby.sh
+
+## langs-go - Install Go
+langs-go:
+	sh langs/go.sh
+
+## langs-java - Install Java
+langs-java:
+	sh langs/java.sh
+
+## langs-php - Install PHP
+langs-php:
+	sh langs/php.sh
+
 ## microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
 microsoft:
 	sh microsoft.sh
