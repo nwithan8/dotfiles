@@ -94,15 +94,41 @@ function download_file() {
     curl "$url"
 }
 
-# Checkout a GitHub PR (without GH CLI)
+# Checkout an external GitHub PR (requires GH CLI)
 function ghpr_checkout() {
     id="$1"
     if [ -z "$id" ]; then
-        echo "No PR ID specified. Usage: ghpr_checkout <id>"
+        echo "Usage: ghpr_checkout <id> <repo>"
         return 1
     fi
-    git fetch origin pull/$id/head:pr-$id
-    git checkout pr-$id
+
+    # Fetch PR
+    gh pr checkout "$id"
+    git checkout "$pr_id"
+}
+
+# Checkout an external GitHub PR
+function ghpr_checkout_old() {
+    id="$1"
+    if [ -z "$id" ]; then
+        echo "Usage: ghpr_checkout <id> <repo>"
+        return 1
+    fi
+
+    repo="$2"
+    if [ -z "$repo" ]; then
+        echo "Usage: ghpr_checkout <id> <repo>"
+        return 1
+    fi
+
+    pr_id="pr-$id"
+
+    # Set up new remote
+    git remote add "$pr_id" "$repo"
+
+    # Fetch PR
+    git fetch origin pull/$id/head:$pr_id
+    git checkout "$pr_id"
 }
 
 

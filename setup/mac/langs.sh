@@ -23,3 +23,6 @@ sh langs/go.sh
 
 # .NET
 sh langs/net.sh
+
+# Rust
+sh langs/rust.sh
