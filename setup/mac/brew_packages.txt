@@ -18,11 +18,14 @@ lua
 mvn
 mysql
 node
+nvm
 onepass
 onepass
 openjdk
 openssl
 opus
+pcp
+pcopy
 php
 rclone
 rsync
@@ -40,5 +43,4 @@ android-platform-tools
 bitwarden-cli
 docfx
 wkhtmltopdf
-pcp
-pcopy
+
