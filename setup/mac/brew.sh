@@ -25,3 +25,7 @@ done < brew_casks.txt
 
 # Backup brew packages
 alchemist --backup
+
+
+# Set up necessary directories
+mkdir ~/.nvm # nvm
