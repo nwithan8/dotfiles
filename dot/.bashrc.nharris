@@ -40,10 +40,18 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export DOTSCRIPTS="$HOME/.scripts"
 
 
+
+####### Set up folders and files
+eval "$(mkdir -p ~/.Trash)" # This folder already exists on MacOS
+
+
 ####### Aliases
 
 # More advanced cat
 alias cat="bat"
+
+# Trash on Unix
+alias rm="trash" # Send args to "trash" function below
 
 # Use pyenv pip
 alias pip="python3 -m pip"
@@ -55,8 +63,14 @@ alias ghpr="gh pr"
 # BitWarden SSH key importer
 alias bwssh="$DOTSCRIPTS/bw_add_sshkeys.py"
 
-
 ####### Shortcuts (call directly)
+
+# Trash on Unix
+function trash() {
+  for file in "$@"; do
+    mv "$file" ~/.Trash/
+  done
+}
 
 # Install rbenv easily
 function rbenv_install_easy() {
