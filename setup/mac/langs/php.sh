@@ -9,3 +9,4 @@ done
 echo "Installing PHP utilities..."
 # Composer
 brew install composer
+"$(brew --prefix php)"/bin/pecl install xdebug
