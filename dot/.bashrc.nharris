@@ -128,7 +128,7 @@ function decrypt_file() {
 function upload_file() {
     file="$1";
     url="$2";
-    curl --progress-bar --upload-file "-" "$1"
+    curl -X PUT --progress-bar --upload-file "$file" "$url/$file"
 }
 
 # Download a file from a URL
