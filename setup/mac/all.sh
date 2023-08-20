@@ -4,7 +4,7 @@
 
 REPO_LOCATION=$1
 
-# Set up files
+# Set up dot files
 sh ./files.sh "$REPO_LOCATION"
 
 # Create SSH key
