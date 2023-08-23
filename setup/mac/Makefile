@@ -3,89 +3,114 @@ help:
 	@cat Makefile | grep '^## ' --color=never | cut -c4- | sed -e "`printf 's/ - /\t- /;'`" | column -s "`printf '\t'`" -t
 
 ## all - Run all main steps
+# @param private_key_path - Path to GPG private key
 all: |
-	shell
-	sh all.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+	make set_up_shell
+	make install_brew
+	make install_bashftw
+	make set_up_ssh_keys
+	make set_up_gpg "$(private_key_path)"
+	make decrypt_private_files "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+	make install_dotfiles "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+	make install_git
+	make install_github
+	make clone_repos
+	make install_langs
+	make install_ides
 
-## bashftw - Install and set up bash-ftw
-bashftw:
+## install_bashftw - Install and set up bash-ftw
+install_bashftw:
 	sh bashftw.sh
 
-## brew - Install brew packages
-brew:
+## install_brew - Install brew packages
+install_brew:
 	sh brew.sh
 
-## extras - Run extra utilities
-extras:
+## decrypt_private_files - Decrypt private files
+decrypt_private_files:
+	sh decrypt.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+
+## encrypt_private_files - Encrypt private files
+encrypt_private_files:
+	sh encrypt.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+
+## set_up_extras - Run extra utilities
+set_up_extras:
 	sh extras.sh
 
-## files - Copy files to home directory
-files:
+## install_dotfiles - Copy files to home directory
+install_dotfiles:
 	sh files.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
 
-## git - Set up Git
-git:
+## install_git - Set up Git
+install_git:
 	sh git.sh
 
-## github - Set up GitHub
-github:
+## install_github - Set up GitHub
+install_github:
 	sh github.sh
 
-## ides - Install IDEs
-ides:
+## set_up_gpg - Set up GPG
+# @param private_key_path - Path to private key
+set_up_gpg:
+	sh gpg.sh "$(private_key_path)" "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+
+## install_ides - Install IDEs
+install_ides:
 	sh ides.sh
 
-## jetbrains - Install JetBrains IDEs
-jetbrains:
+## install_jetbrains - Install JetBrains IDEs
+install_jetbrains:
 	sh jetbrains.sh
 
-## keys - Set up SSH keys
-keys:
+## set_up_ssh_keys - Set up SSH keys
+set_up_ssh_keys:
 	sh keys.sh
 
-## langs - Install required programming languages and SDKs
-langs:
+## install_langs - Install required programming languages and SDKs
+install_langs:
 	sh langs.sh
 
-## langs-net - Install .NET SDKs
-langs-net:
+## install_dotnet - Install .NET SDKs
+install_dotnet:
 	sh langs/net.sh
 
-## langs-node - Install Node.js and NPM
-langs-node:
+## install_node - Install Node.js and NPM
+install_node:
 	sh langs/node.sh
 
-## langs-python - Install Python and Pip
-langs-python:
+## install_python - Install Python and Pip
+install_python:
 	sh langs/python.sh
 
-## langs-ruby - Install Ruby and Gems
-langs-ruby:
+## install_ruby - Install Ruby and Gems
+install_ruby:
 	sh langs/ruby.sh
 
-## langs-go - Install Go
-langs-go:
+## install_go - Install Go
+install_go:
 	sh langs/go.sh
 
-## langs-java - Install Java
-langs-java:
+## install_java - Install Java
+install_java:
 	sh langs/java.sh
 
-## langs-php - Install PHP
-langs-php:
+## install_php - Install PHP
+install_php:
 	sh langs/php.sh
 
-## microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
-microsoft:
+## install_microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
+install_microsoft:
 	sh microsoft.sh
 
-## repos - Clone GitHub repositories
-repos:
+## clone_repos - Clone GitHub repositories
+clone_repos:
 	sh repos.sh
 
-## shell - Change ZSH shell to Bash
-shell:
+## set_up_shell - Change ZSH shell to Bash
+set_up_shell:
 	zsh shell.sh
 
+.PHONY: all help install_bashftw install_brew decrypt_private_files encrypt_private_files set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell
 
 

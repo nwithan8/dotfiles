@@ -1,9 +1,0 @@
-[user]
-	name = nharris
-	email = nharris@easypost.com
-
-[pull]
-	rebase = true
-
-[submodule]
-	recurse = true

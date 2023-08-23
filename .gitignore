@@ -1,2 +1,6 @@
-/dot/easypost/.bashrc*
-/dot/rclone.conf
+# Decrypted files
+/dot/decrypted/*
+
+# Don't ignore encrypted files or open files
+!/dot/encrypted/*
+!/dot/open/*
