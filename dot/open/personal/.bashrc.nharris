@@ -94,6 +94,26 @@ haste() {
     echo "$HASTEBIN_URL/$p";
 }
 
+# Copy a local file to the pcopy server
+pcp() {
+    pcopy copy "$1" < "$1"
+}
+
+# Copy a local directory to the pcopy server
+pcpdir() {
+    pcopy copy $(basename "$1") "$1"
+}
+
+# Paste a file from the pcopy server to a local file
+ppaste() {
+    pcopy paste "$1" > "$1"
+}
+
+# Paste a directory from the pcopy server to a local directory
+ppastedir() {
+    pcopy paste "$1" > "$1.zip"
+}
+
 # Install rbenv easily
 function rbenv_install_easy() {
     RUBY_CONFIGURE_OPTS=--with-readline-dir="$(brew --prefix readline)" RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/Cellar/openssl@3/3.0.1 rbenv install -v $1
