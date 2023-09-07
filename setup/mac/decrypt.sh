@@ -22,5 +22,7 @@ find "$ENCRYPTED_FOLDER_DIRECTORY" -type f | while read -r path; do
   target_file="${path%$ENCRYPTED_SUFFIX}"
   # target path is path with "encrypted" replaced with "decrypted"
   target_path="${target_file/encrypted/decrypted}"
+  # make sure the target directory exists
+  mkdir -p "$(dirname "$target_path")"
   "$DECRYPT_SCRIPT" "$path" "$target_path"
 done

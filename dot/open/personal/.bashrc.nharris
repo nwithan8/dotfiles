@@ -1,7 +1,12 @@
+###### Imports
+
+eval export $(cat .dotfiles_secrets) || true # Load secrets from .dotfiles_secrets file
+
+
+
+
 ###### Constants
 
-export TRANSFER_SH_URL="https://transfer.technicallyspeaking.tech"
-export HASTEBIN_URL="https://hastebin.technicallyspeaking.tech"
 
 
 

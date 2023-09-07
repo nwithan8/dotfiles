@@ -3,6 +3,10 @@
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh" # Homebrew bash_completion
 
 
+####### Aliases
+
+alias copy="pbcopy"
+alias paste="pbpaste"
 
 
 ####### Shortcuts (call directly)
