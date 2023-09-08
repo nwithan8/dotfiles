@@ -1,6 +1,6 @@
 ###### Imports
 
-eval export $(cat .dotfiles_secrets) || true # Load secrets from .dotfiles_secrets file
+eval export $(cat "$HOME/.dotfiles_secrets") || true # Load secrets from .dotfiles_secrets file
 
 
 
