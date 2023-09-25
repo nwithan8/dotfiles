@@ -20,12 +20,25 @@ do_backup_file() {
   fi
 }
 
+do_remove_symlink() {
+  DEST_FILE=$1
+
+  # Remove symlink if it exists
+  if [ -L "$DEST_FILE" ]; then
+    echo "Removing symlink $DEST_FILE"
+    rm "$DEST_FILE" || true
+  fi
+}
+
 do_symlink_file() {
   SRC_FILE=$1
   DEST_FILE=$2
 
   DEST_FOLDER=$(dirname "$DEST_FILE")
   mkdir -p "$DEST_FOLDER" || true
+
+  # Remove symlink if it exists
+    do_remove_symlink "$DEST_FILE"
 
   # Symlink file
   echo "Symlinking $SRC_FILE to $DEST_FILE"
