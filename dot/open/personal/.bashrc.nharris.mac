@@ -2,14 +2,56 @@
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh" # Homebrew bash_completion
 
+# Load Java versions
+export JAVA_7_HOME=$(/usr/libexec/java_home -v 1.7)
+export JAVA_8_HOME=$(/usr/libexec/java_home -v 1.8)
+export JAVA_9_HOME=$(/usr/libexec/java_home -v 9)
+export JAVA_10_HOME=$(/usr/libexec/java_home -v 10)
+export JAVA_11_HOME=$(/usr/libexec/java_home -v 11)
+export JAVA_12_HOME=$(/usr/libexec/java_home -v 12)
+export JAVA_13_HOME=$(/usr/libexec/java_home -v 13)
+export JAVA_14_HOME=$(/usr/libexec/java_home -v 14)
+export JAVA_15_HOME=$(/usr/libexec/java_home -v 15)
+export JAVA_16_HOME=$(/usr/libexec/java_home -v 16)
+export JAVA_17_HOME=$(/usr/libexec/java_home -v 17)
+export JAVA_18_HOME=$(/usr/libexec/java_home -v 18)
+export JAVA_19_HOME=$(/usr/libexec/java_home -v 19)
+export JAVA_20_HOME=$(/usr/libexec/java_home -v 20)
+export JAVA_21_HOME=$(/usr/libexec/java_home -v 21)
+
+# Set default Java version
+export JAVA_HOME=$JAVA_18_HOME
 
 ####### Aliases
 
 alias copy="pbcopy"
 alias paste="pbpaste"
 
+alias java7='export JAVA_HOME=$JAVA_7_HOME'
+alias java8='export JAVA_HOME=$JAVA_8_HOME'
+alias java9='export JAVA_HOME=$JAVA_9_HOME'
+alias java10='export JAVA_HOME=$JAVA_10_HOME'
+alias java11='export JAVA_HOME=$JAVA_11_HOME'
+alias java12='export JAVA_HOME=$JAVA_12_HOME'
+alias java13='export JAVA_HOME=$JAVA_13_HOME'
+alias java14='export JAVA_HOME=$JAVA_14_HOME'
+alias java15='export JAVA_HOME=$JAVA_15_HOME'
+alias java16='export JAVA_HOME=$JAVA_16_HOME'
+alias java17='export JAVA_HOME=$JAVA_17_HOME'
+alias java18='export JAVA_HOME=$JAVA_18_HOME'
+alias java19='export JAVA_HOME=$JAVA_19_HOME'
+alias java20='export JAVA_HOME=$JAVA_20_HOME'
+alias java21='export JAVA_HOME=$JAVA_21_HOME'
+
 
 ####### Shortcuts (call directly)
+
+# Set Java version for current shell
+function set_java() {
+    # Will set JAVA_HOME to the first matching version, or latest if none match
+    export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+    echo "Java version set to $JAVA_HOME"
+}
 
 # Transfer to transfer.sh and copy link to clipboard
 function transfer(){
