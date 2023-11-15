@@ -16,6 +16,7 @@ golangci-lint
 gradle
 grep
 htop
+imagemagick
 jpeg
 jq
 libyaml
