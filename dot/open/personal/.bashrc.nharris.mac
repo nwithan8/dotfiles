@@ -2,6 +2,9 @@
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh" # Homebrew bash_completion
 
+# Use GNU sed instead of MacOS sed
+export PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
+
 # Load Java versions
 export JAVA_7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA_8_HOME=$(/usr/libexec/java_home -v 1.8)
