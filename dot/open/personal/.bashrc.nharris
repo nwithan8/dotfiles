@@ -199,7 +199,17 @@ function ghpr_checkout_old() {
     git checkout "$pr_id"
 }
 
+# Create a Python virtual environment
+function make_py_venv() {
+    venv_path="$1"
+    if [ -z "$venv_path" ]; then
+        echo "Usage: make_py_venv <venv_path>"
+        return 1
+    fi
 
+    python3 -m venv "$venv_path"
+    source "$venv_path/bin/activate"
+}
 
 
 
