@@ -10,8 +10,10 @@ git-credential-manager-core
 handbrake
 iterm2
 makemkv
+obsidian
 postman
 powershell
+raycast
 teamviewer
 virtualbox
 visual-studio
