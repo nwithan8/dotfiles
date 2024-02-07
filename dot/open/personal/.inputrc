@@ -1,0 +1,2 @@
+# Map Ctrl-R to fzf
+"\C-r":"fzf"

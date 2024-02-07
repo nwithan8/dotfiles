@@ -120,6 +120,17 @@ CRONTAB_FILE="$OPEN_FOLDER/crontab"
 echo "Installing crontab..."
 crontab "$CRONTAB_FILE"
 
+# Link git config
+GIT_CONFIG_FILE="$OPEN_FOLDER/personal/.gitconfig"
+echo "Installing git config..."
+do_backup_and_symlink_file "$GIT_CONFIG_FILE" "$HOME/.gitconfig"
+
+# Link .inputrc
+INPUTRC_FILE="$OPEN_FOLDER/personal/.inputrc"
+echo "Installing .inputrc..."
+do_backup_and_symlink_file "$INPUTRC_FILE" "$HOME/.inputrc"
+
+
 # Link rclone config
 RCLONE_CONFIG_DIR="$HOME/.config/rclone"
 mkdir -p "$RCLONE_CONFIG_DIR" || true
