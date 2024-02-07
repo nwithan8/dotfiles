@@ -1,2 +1,2 @@
-# Map Ctrl-R to fzf
-"\C-r":"fzf"
+# Map Ctrl-R to piping bash history into fzf
+# "\C-r":"cat ~/.bash_history | fzf"
