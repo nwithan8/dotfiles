@@ -7,6 +7,7 @@ composer
 curl
 docfx
 ffmpeg
+fzf
 gh
 git
 gnu-sed
