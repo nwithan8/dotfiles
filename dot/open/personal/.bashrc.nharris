@@ -73,9 +73,6 @@ alias ghpr="gh pr"
 # BitWarden SSH key importer
 alias bwssh="$DOTSCRIPTS/bw_add_sshkeys.py"
 
-# Check most-used command
-alias mostused="history | awk '{print $4}' | sort | uniq -c | sort -nr | head -n 5"
-
 
 
 
@@ -87,6 +84,13 @@ function trash() {
   for file in "$@"; do
     mv "$file" ~/.Trash/
   done
+}
+
+# Get most-used commands
+most_used_commands() {
+    # Count from first argument, or 10 if no argument
+    count=${1:-10}
+    history | awk '{print $4}' | sort | uniq -c | sort -nr | head -n "$count"
 }
 
 # Paste file contents to Hastebin
