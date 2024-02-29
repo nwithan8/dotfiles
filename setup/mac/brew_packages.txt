@@ -47,3 +47,4 @@ tree
 wget
 wkhtmltopdf
 yarn
+zoxide
