@@ -31,6 +31,7 @@ export DOTSCRIPTS="$HOME/.scripts"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # Load rbenv: https://github.com/rbenv/rbenv#installation
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -74,11 +75,60 @@ alias ghpr="gh pr"
 # BitWarden SSH key importer
 alias bwssh="$DOTSCRIPTS/bw_add_sshk"
 
-# Reroute cd to zoxide
-alias cd="z"
-
+# Replace cd with z
+alias cd=z
+alias cdi=zi
 
 ####### Shortcuts (call directly)
+
+# Refresh pyenv versions
+function pyenv_refresh() {
+    PYENV_ROOT="$HOME/.pyenv"
+    cd "$PYENV_ROOT" && git pull
+    cd "$HOME"
+}
+
+# Install latest version of Python
+function pyenv_install_latest() {
+    eval "$(pyenv init -)"
+
+    # Install latest version of Python that is not a development version
+    LATEST_VERSION=$(pyenv install --list | grep -E "^[0-9]+\.[0-9]+\.[0-9]+$" | tail -n 1)
+    LATEST_VERSION=$(echo "$LATEST_VERSION" | tr -d '[:space:]')
+    # echo "Installing latest version of Python: $LATEST_VERSION"
+
+    INSTALL_COMMAND="pyenv install -s $LATEST_VERSION"
+    echo "$INSTALL_COMMAND"
+    # eval "$INSTALL_COMMAND"
+}
+
+# Install latest patch of Python minor version
+function pyenv_install_latest_patch() {
+    eval "$(pyenv init -)"
+
+    minor_version="$1"
+    if [ -z "$minor_version" ]; then
+        echo "Usage: pyenv_install_latest_patch <minor_version>"
+        return 1
+    fi
+
+    LATEST_PATCH=$(pyenv install --list | grep -E "^  $minor_version\.[0-9]+$" | tail -n 1)
+
+    # echo "Installing latest patch of Python $minor_version: $LATEST_PATCH"
+    INSTALL_COMMAND="pyenv install -s $LATEST_PATCH"
+    echo "$INSTALL_COMMAND"
+    # eval "$INSTALL_COMMAND"
+
+    MATCHING_MINOR_VERSIONS=$(_pyenv_find_versions "$minor_version")
+    for version in $MATCHING_MINOR_VERSIONS; do
+        if [ "$version" != "$LATEST_PATCH" ]; then
+            # echo "Uninstalling old version: $version"
+            UNINSTALL_COMMAND="pyenv uninstall -f $version"
+            echo "$UNINSTALL_COMMAND"
+            # eval "$UNINSTALL_COMMAND"
+        fi
+    done
+}
 
 # Trash on Unix
 function trash() {
@@ -221,6 +271,17 @@ function make_py_venv() {
 
 
 ####### Internal functions (call indirectly)
+
+# Find all versions of Python in pyenv with matching major.minor version
+function _pyenv_find_versions() {
+    version="$1"
+    if [ -z "$version" ]; then
+        echo "Usage: _pyenv_find_versions <version>"
+        return 1
+    fi
+
+    pyenv versions --bare | grep -E "^$version\.[0-9]+$"
+}
 
 # Upload encrypted file to transfer.sh instance
 function _upload_encrypted_file() {

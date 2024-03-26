@@ -12,6 +12,7 @@ gh
 git
 gnu-sed
 gnupg
+glow
 go
 golangci-lint
 gradle
