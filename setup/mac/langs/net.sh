@@ -5,7 +5,7 @@
 # If you can't build a .NET app, you may need to install the SDK
 # https://dotnet.microsoft.com/en-us/download/dotnet
 
-DOTNET_VERSIONS="Current 7.0 6.0 5.0 3.1"
+DOTNET_VERSIONS="8.0 7.0 6.0 5.0 3.1"
 echo "Installing C# and .NET..."
 wget https://dot.net/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
