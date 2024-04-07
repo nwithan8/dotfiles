@@ -130,6 +130,12 @@ INPUTRC_FILE="$OPEN_FOLDER/personal/.inputrc"
 echo "Installing .inputrc..."
 do_backup_and_symlink_file "$INPUTRC_FILE" "$HOME/.inputrc"
 
+# Link ssh config
+SSH_CONFIG_DIR="$HOME/.ssh"
+mkdir -p "$SSH_CONFIG_DIR" || true
+SSH_CONFIG_FILE="$DECRYPTED_FOLDER/ssh_config"
+echo "Installing ssh config..."
+do_backup_and_symlink_file "$SSH_CONFIG_FILE" "$SSH_CONFIG_DIR/config"
 
 # Link rclone config
 RCLONE_CONFIG_DIR="$HOME/.config/rclone"
