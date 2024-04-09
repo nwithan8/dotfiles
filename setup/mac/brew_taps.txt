@@ -3,3 +3,4 @@ microsoft/git
 shivammathur/php
 nwithan8/tap
 localsend/localsend
+charmbracelet/tap

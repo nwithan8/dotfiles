@@ -2,6 +2,8 @@
 alchemist
 android-platform-tools
 bitwarden-cli
+charmbracelet/tap/charm
+charmbracelet/tap/freeze
 clienv
 composer
 curl
@@ -45,6 +47,7 @@ swagger-codegen
 telnet
 travis
 tree
+vhs
 wget
 wkhtmltopdf
 yarn

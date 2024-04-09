@@ -49,6 +49,8 @@ alias java19='export JAVA_HOME=$JAVA_19_HOME'
 alias java20='export JAVA_HOME=$JAVA_20_HOME'
 alias java21='export JAVA_HOME=$JAVA_21_HOME'
 
+alias readme="glow"
+alias secret="charm kv"
 
 ####### Shortcuts (call directly)
 
