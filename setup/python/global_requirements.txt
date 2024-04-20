@@ -29,6 +29,7 @@ pyperclip
 pysqlcipher3
 python-dateutil
 python-dotenv
+rembg[cli]
 requests
 scipy
 sphinx
