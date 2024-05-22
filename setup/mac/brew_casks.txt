@@ -13,6 +13,7 @@ obsidian
 postman
 powershell
 raycast
+rectangle
 teamviewer
 virtualbox
 visual-studio

@@ -34,6 +34,12 @@ do_symlink_file() {
   SRC_FILE=$1
   DEST_FILE=$2
 
+  # Verify SRC_FILE exists, skip if it doesn't
+  if [ ! -f "$SRC_FILE" ]; then
+    echo "Error: $SRC_FILE does not exist"
+    return 1
+  fi
+
   DEST_FOLDER=$(dirname "$DEST_FILE")
   mkdir -p "$DEST_FOLDER" || true
 

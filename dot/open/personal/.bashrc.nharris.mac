@@ -30,8 +30,9 @@ export JAVA_HOME=$JAVA_18_HOME
 
 ####### Aliases
 
-alias copy="pbcopy"
-alias paste="pbpaste"
+alias copy="cp -r" # Replicate Windows "copy"
+# Use "copy_contents" for clipboard copy
+alias paste="pbpaste" # Paste from clipboard
 
 alias java7='export JAVA_HOME=$JAVA_7_HOME'
 alias java8='export JAVA_HOME=$JAVA_8_HOME'
@@ -53,6 +54,11 @@ alias readme="glow"
 alias secret="charm kv"
 
 ####### Shortcuts (call directly)
+
+# Copy contents of a file
+function copy_content() {
+    cat $1 | pbcopy
+}
 
 # Set Java version for current shell
 function set_java() {

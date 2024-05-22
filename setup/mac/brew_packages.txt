@@ -26,6 +26,7 @@ jq
 libyaml
 localsend
 lua
+lunar
 mvn
 mysql
 node
@@ -36,6 +37,8 @@ opus
 pcopy
 pcp
 php
+platformio
+python-certifi
 rar
 rclone
 rsync
