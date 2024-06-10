@@ -10,8 +10,8 @@ all: |
 	make install_bashftw
 	make set_up_ssh_keys
 	make set_up_gpg "$(private_key_path)"
-	make decrypt_private_files "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
-	make install_dotfiles "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+	make decrypt_private_files
+	make install_dotfiles
 	make install_git
 	make install_github
 	make clone_repos
