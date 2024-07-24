@@ -2,8 +2,15 @@
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh" # Homebrew bash_completion
 
+# Map to correct GPG
+export GPG_TTY=$(tty)
+
 # Use GNU sed instead of MacOS sed
 export PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
+
+# Use curl from brew rather than MacOS pre-installed
+export HOMEBREW_FORCE_BREWED_CURL=1
+export HOMEBREW_FORCE_BREWED_CA_CERTIFICATES=1
 
 # Use dotnet stored in .dotnet directory
 export PATH="$HOME/.dotnet:$PATH"
