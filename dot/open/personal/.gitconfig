@@ -17,3 +17,6 @@
 [credential]
 	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
+
+[credential "http://buysafe10"]
+	provider = generic
