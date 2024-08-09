@@ -360,9 +360,9 @@ function _download_encrypted_transfer() {
 ####### Load platform-specific user bash files
 
 # Linux
-[[ $KERNEL == 'Linux' ]] && [[ -s "$HOME/.bashrc.nharris.linux" ]] && source "$HOME/.bashrc.nharris.linux"
+[[ $KERNEL == 'Linux' ]] && [[ -s "$HOME/.bashrc.personal.linux" ]] && source "$HOME/.bashrc.personal.linux"
 # Mac
-[[ $KERNEL == 'Darwin' ]] && [[ -s "$HOME/.bashrc.nharris.mac" ]] && source "$HOME/.bashrc.nharris.mac"
+[[ $KERNEL == 'Darwin' ]] && [[ -s "$HOME/.bashrc.personal.mac" ]] && source "$HOME/.bashrc.personal.mac"
 
 
 
