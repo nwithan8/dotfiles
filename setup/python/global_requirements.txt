@@ -23,6 +23,7 @@ Pillow
 plexapi
 praw
 prawcore
+pre-commit
 progress
 pycrypto
 pyperclip
