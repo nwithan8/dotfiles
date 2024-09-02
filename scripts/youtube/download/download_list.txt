@@ -1,0 +1,1 @@
+NCAAF 2024;https://www.youtube.com/playlist?list=PLS0l0l9Jwi3DXGqOsU1E4OwrRmFaQtNuN;%(title)s (%(upload_date>%Y-%m-%d)s).%(ext)s
