@@ -1,1 +1,5 @@
 NCAAF 2024;https://www.youtube.com/playlist?list=PLS0l0l9Jwi3DXGqOsU1E4OwrRmFaQtNuN;%(title)s (%(upload_date>%Y-%m-%d)s).%(ext)s
+NCAAF 2023;https://www.youtube.com/playlist?list=PLS0l0l9Jwi3Ce2kqPUNrOR2RjE6RKkIfT;%(title)s (%(upload_date>%Y-%m-%d)s).%(ext)s
+NCAAF 2022;https://www.youtube.com/playlist?list=PLS0l0l9Jwi3AiBuYBpIu_1MejBKFDMudS;%(title)s (%(upload_date>%Y-%m-%d)s).%(ext)s
+NCAAF 2021;https://www.youtube.com/playlist?list=PLS0l0l9Jwi3DlcGfW2bWUdJy1iBwZ2_Ea;%(title)s (%(upload_date>%Y-%m-%d)s).%(ext)s
+Byte My Bits;https://www.youtube.com/@Bytemybits;%(title)s (%(upload_date>%Y-%m-%d)s).%(ext)s
