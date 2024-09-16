@@ -20,3 +20,5 @@
 
 [credential "http://buysafe10"]
 	provider = generic
+[core]
+	autocrlf = input
