@@ -2,6 +2,7 @@
 alchemist
 android-platform-tools
 bitwarden-cli
+cast-text
 charmbracelet/tap/charm
 charmbracelet/tap/freeze
 clienv
