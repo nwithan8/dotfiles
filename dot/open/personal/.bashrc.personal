@@ -269,21 +269,16 @@ function make_py_venv() {
 }
 
 # Ask GitHub Copilot for help
-function copilot_explain() {
+function ask_copilot() {
     prompt="$1"
-    attachment="$2"
+    input="$(cat)"
+
     if [ -z "$prompt" ]; then
-        echo "Usage: ask_copilot <prompt> <attachment>"
+        echo "Usage: cat some_file.txt | ask_copilot '<prompt>'"
         return 1
     fi
 
-    input="$prompt"
-    if [ -n "$attachment" ]; then
-        attachment_body=$(cat $attachment)
-        input="$prompt:\n$attachment_body"
-    fi
-
-    gh copilot explain "$input"
+    gh copilot explain "$prompt:\n$input"
 }
 
 # Install standard GitHub Copilot aliases
