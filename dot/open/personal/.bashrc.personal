@@ -268,7 +268,26 @@ function make_py_venv() {
     source "$venv_path/bin/activate"
 }
 
+# Ask GitHub Copilot for help
+function copilot_explain() {
+    prompt="$1"
+    attachment="$2"
+    if [ -z "$prompt" ]; then
+        echo "Usage: ask_copilot <prompt> <attachment>"
+        return 1
+    fi
 
+    input="$prompt"
+    if [ -n "$attachment" ]; then
+        attachment_body=$(cat $attachment)
+        input="$prompt:\n$attachment_body"
+    fi
+
+    gh copilot explain "$input"
+}
+
+# Install standard GitHub Copilot aliases
+eval "$(gh copilot alias -- bash)"
 
 ####### Internal functions (call indirectly)
 
