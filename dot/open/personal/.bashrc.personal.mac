@@ -31,9 +31,11 @@ export JAVA_18_HOME=$(/usr/libexec/java_home -v 18)
 export JAVA_19_HOME=$(/usr/libexec/java_home -v 19)
 export JAVA_20_HOME=$(/usr/libexec/java_home -v 20)
 export JAVA_21_HOME=$(/usr/libexec/java_home -v 21)
+export JAVA_22_HOME=$(/usr/libexec/java_home -v 22)
+export JAVA_23_HOME=$(/usr/libexec/java_home -v 23)
 
 # Set default Java version
-export JAVA_HOME=$JAVA_18_HOME
+export JAVA_HOME=$JAVA_23_HOME
 
 ####### Aliases
 
@@ -56,6 +58,8 @@ alias java18='export JAVA_HOME=$JAVA_18_HOME'
 alias java19='export JAVA_HOME=$JAVA_19_HOME'
 alias java20='export JAVA_HOME=$JAVA_20_HOME'
 alias java21='export JAVA_HOME=$JAVA_21_HOME'
+alias java22='export JAVA_HOME=$JAVA_22_HOME'
+alias java23='export JAVA_HOME=$JAVA_23_HOME'
 
 alias readme="glow"
 alias secret="charm kv"
