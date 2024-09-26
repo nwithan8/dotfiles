@@ -66,6 +66,11 @@ alias secret="charm kv"
 
 ####### Shortcuts (call directly)
 
+# Convert UNIX timestamp to human-readable datetime
+function read_unix_ts() {
+    date -r $1
+}
+
 # Copy contents of a file
 function copy_content() {
     cat $1 | pbcopy
