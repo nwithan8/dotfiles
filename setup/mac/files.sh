@@ -3,7 +3,7 @@
 REPO_LOCATION=$1
 
 DOT_FOLDER="$REPO_LOCATION/dot"
-DECRYPTED_FOLDER="$DOT_FOLDER/decrypted"
+DECRYPTED_FOLDER="$DOT_FOLDER/secret"
 OPEN_FOLDER="$DOT_FOLDER/open"
 
 # Symlink files to their appropriate locations

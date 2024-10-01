@@ -28,11 +28,7 @@ install_brew:
 
 ## decrypt_private_files - Decrypt private files
 decrypt_private_files:
-	sh decrypt.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
-
-## encrypt_private_files - Encrypt private files
-encrypt_private_files:
-	sh encrypt.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+	git-crypt unlock
 
 ## set_up_extras - Run extra utilities
 set_up_extras:
@@ -111,6 +107,6 @@ clone_repos:
 set_up_shell:
 	zsh shell.sh
 
-.PHONY: all help install_bashftw install_brew decrypt_private_files encrypt_private_files set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell
+.PHONY: all help install_bashftw install_brew set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
 
 
