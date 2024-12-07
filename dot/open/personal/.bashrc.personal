@@ -73,7 +73,8 @@ alias pip3="python3 -m pip"
 alias ghpr="gh pr"
 
 # BitWarden SSH key importer
-alias bwssh="$DOTSCRIPTS/bw_add_sshk"
+alias bwssh="$DOTSCRIPTS/bw_add_sshkeys.py"
+alias bw='NODE_OPTIONS="--no-deprecation" bw'
 
 # Replace cd with z
 alias cd=z
