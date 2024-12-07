@@ -7,9 +7,11 @@ charmbracelet/tap/charm
 charmbracelet/tap/freeze
 clienv
 composer
+cowsay
 curl
 docfx
 ffmpeg
+fortune
 fzf
 gh
 git
