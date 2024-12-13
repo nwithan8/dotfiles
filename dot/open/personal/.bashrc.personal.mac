@@ -71,6 +71,13 @@ alias secret="charm kv"
 
 ####### Shortcuts (call directly)
 
+# Mirror a repo to Charm Soft-Serve
+function soft_mirror() {
+    name=$1
+    github_url=$2
+    ssh soft repo import -m "$name" "$github_url"
+}
+
 # Convert UNIX timestamp to human-readable datetime
 function read_unix_ts() {
     date -r $1
