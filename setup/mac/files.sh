@@ -126,6 +126,11 @@ CRONTAB_FILE="$OPEN_FOLDER/crontab"
 echo "Installing crontab..."
 crontab "$CRONTAB_FILE"
 
+# Prepare path utility folder
+PATH_UTILS_FOLDER="$HOME/.path_utils"
+echo "Setting up path utility folder..."
+mkdir -p "$PATH_UTILS_FOLDER" || true
+
 # Link git config
 GIT_CONFIG_FILE="$OPEN_FOLDER/personal/.gitconfig"
 echo "Installing git config..."
@@ -135,6 +140,11 @@ do_backup_and_symlink_file "$GIT_CONFIG_FILE" "$HOME/.gitconfig"
 INPUTRC_FILE="$OPEN_FOLDER/personal/.inputrc"
 echo "Installing .inputrc..."
 do_backup_and_symlink_file "$INPUTRC_FILE" "$HOME/.inputrc"
+
+# Link GitHub Copilot commands
+GITHUB_COPILOT_BASHRC_FILE="$OPEN_FOLDER/personal/.bashrc.copilot"
+echo "Installing GitHub Copilot commands..."
+do_backup_and_symlink_file "$GITHUB_COPILOT_BASHRC_FILE" "$HOME/.bashrc.copilot"
 
 # Link ssh config
 SSH_CONFIG_DIR="$HOME/.ssh"

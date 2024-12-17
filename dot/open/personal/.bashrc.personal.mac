@@ -39,8 +39,8 @@ export JAVA_HOME=$JAVA_23_HOME
 
 ####### Start Up
 
-# Get a cow fortune
-fortune | cowsay
+# Get a stoned cow fortune
+fortune | cowsay -s
 
 ####### Aliases
 
@@ -93,6 +93,14 @@ function set_java() {
     # Will set JAVA_HOME to the first matching version, or latest if none match
     export JAVA_HOME=$(/usr/libexec/java_home -v $1)
     echo "Java version set to $JAVA_HOME"
+}
+
+# Send a file to PairDrop
+function airdrop() {
+    # Set PairDrop domain
+    pairdrop -d "$PAIRDROP_HOST"
+    # Send file
+    pairdrop "$1"
 }
 
 # Transfer to transfer.sh and copy link to clipboard

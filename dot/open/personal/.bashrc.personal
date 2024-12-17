@@ -1,5 +1,7 @@
 ###### Imports
 
+source "$HOME/.bashrc.copilot" # Load bashrc.copilot file
+
 eval export $(cat "$HOME/.dotfiles_secrets") || true # Load secrets from .dotfiles_secrets file
 
 
@@ -281,9 +283,6 @@ function ask_copilot() {
 
     gh copilot explain "$prompt:\n$input"
 }
-
-# Install standard GitHub Copilot aliases
-eval "$(gh copilot alias -- bash)"
 
 ####### Internal functions (call indirectly)
 
