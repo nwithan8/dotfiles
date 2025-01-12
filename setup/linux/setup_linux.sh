@@ -1,5 +1,7 @@
 #!/bin/sh
 
+GPG_PRIVATE_KEY=$1
+
 # Install git, gh and make
 sudo apt-get install git gh make
 
@@ -18,4 +20,4 @@ git clone git@github.com:nwithan8/dotfiles.git
 cd dotfiles/setup/linux
 
 # Run make step
-make fresh-install
+make fresh-install private_key_path="$GPG_PRIVATE_KEY"
