@@ -2,29 +2,30 @@
 help:
 	@cat Makefile | grep '^## ' --color=never | cut -c4- | sed -e "`printf 's/ - /\t- /;'`" | column -s "`printf '\t'`" -t
 
-## all - Run all main steps
+## fresh-install - Run all fresh-install steps
 # @param private_key_path - Path to GPG private key
-all: |
+fresh-install: |
 	make set_up_shell
-	make install_brew
+	# make install_brew
+	make install_apt
 	make install_bashftw
-	make set_up_ssh_keys
+	# make set_up_ssh_keys # Already handled by clone process
 	make set_up_gpg "$(private_key_path)"
 	make decrypt_private_files
 	make install_dotfiles
 	make install_git
-	make install_github
+	# make install_github # Already handled by clone process
 	make clone_repos
 	make install_langs
 	make install_ides
 
 ## install_bashftw - Install and set up bash-ftw
 install_bashftw:
-	sh bashftw.sh
+	sh ../bashftw.sh
 
-## install_brew - Install brew packages
-install_brew:
-	sh brew.sh
+## install_apt - Install packages via apt
+install_apt:
+	sh apt/packages.sh
 
 ## decrypt_private_files - Decrypt private files
 decrypt_private_files:
@@ -36,20 +37,20 @@ set_up_extras:
 
 ## install_dotfiles - Copy files to home directory
 install_dotfiles:
-	sh files.sh "$(shell pwd)/../.." # This works because the user has to be in the linux directory to run this command
+	sh ../files.sh "$(shell pwd)/../.." # This works because the user has to be in the linux directory to run this command
 
 ## install_git - Set up Git
 install_git:
-	sh git.sh
+	sh ../git.sh
 
 ## install_github - Set up GitHub
 install_github:
-	sh github.sh
+	sh ../github.sh
 
 ## set_up_gpg - Set up GPG
 # @param private_key_path - Path to private key
 set_up_gpg:
-	sh gpg.sh "$(private_key_path)" "$(shell pwd)/../.." # This works because the user has to be in the linux directory to run this command
+	sh ../gpg.sh "$(private_key_path)" "$(shell pwd)/../.." # This works because the user has to be in the linux directory to run this command
 
 ## install_ides - Install IDEs
 install_ides:
@@ -61,11 +62,11 @@ install_jetbrains:
 
 ## set_up_ssh_keys - Set up SSH keys
 set_up_ssh_keys:
-	sh keys.sh
+	sh ../keys.sh
 
 ## install_langs - Install required programming languages and SDKs
 install_langs:
-	sh langs.sh
+	sh ../langs.sh
 
 ## install_dotnet - Install .NET SDKs
 install_dotnet:
@@ -101,12 +102,9 @@ install_microsoft:
 
 ## clone_repos - Clone GitHub repositories
 clone_repos:
-	sh repos.sh
+	sh ../repos.sh
 
-## set_up_shell - Change ZSH shell to Bash
-set_up_shell:
-	sh shell.sh
 
-.PHONY: all help install_bashftw install_brew set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
+.PHONY: first-time all help install_bashftw set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
 
 
