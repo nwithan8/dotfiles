@@ -1,0 +1,5 @@
+# Kill all processes related to app
+function kill-app() {
+	APP_NAME=$1
+	pkill -P $(pgrep $APP_NAME)
+}
