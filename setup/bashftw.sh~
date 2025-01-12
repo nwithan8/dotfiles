@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Need to navigate to 
+
 # Set up .bashrc (needed to install bash-ftw correctly)
 touch ~/.bashrc
 

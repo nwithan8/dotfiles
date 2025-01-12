@@ -1,7 +1,9 @@
 bat
+curl
 zoxide
 go
 rclone
 python3
 python3-pip
 git-crypt
+wget

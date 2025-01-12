@@ -61,7 +61,7 @@ install_jetbrains:
 
 ## set_up_ssh_keys - Set up SSH keys
 set_up_ssh_keys:
-	sh ../keys.sh
+	sh keys.sh
 
 ## install_langs - Install required programming languages and SDKs
 install_langs:
