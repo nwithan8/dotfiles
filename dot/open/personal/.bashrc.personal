@@ -384,4 +384,4 @@ function _download_encrypted_transfer() {
 
 ####### Imports other bash files
 
-export BASHRC_GROUPS='easypost epnharris'  # BashFTW will load a .bashrc.X file for each group
+export BASHRC_GROUPS=''  # BashFTW will load a .bashrc.X file for each group
