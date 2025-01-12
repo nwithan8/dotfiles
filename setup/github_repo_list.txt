@@ -1,10 +1,2 @@
-EasyPost/easypost-csharp
-EasyPost/easypost-go
-EasyPost/easypost-java
-EasyPost/easypost-node
-EasyPost/easypost-php
-EasyPost/easypost-python
-EasyPost/easypost-ruby
-EasyPost/easyvcr-csharp
-EasyPost/easyvcr-java
-EasyPost/examples
+nwithan8/tauticord
+nwithan8/pytulli

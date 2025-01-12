@@ -44,6 +44,7 @@ php
 platformio
 python-certifi
 rar
+rbenv
 rclone
 rsync
 rtmpdump

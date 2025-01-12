@@ -10,13 +10,18 @@ all: |
 	make install_bashftw
 	make set_up_ssh_keys
 	make set_up_gpg "$(private_key_path)"
-	make decrypt_private_files # This works because the user has to be in the mac directory to run this command
-	make install_dotfiles # This works because the user has to be in the mac directory to run this command
 	make install_git
+	make install_bashftw
+	make decrypt_private_files
+	make install_dotfiles
 	make install_github
 	make clone_repos
 	make install_langs
 	make install_ides
+
+## set_up_shell - Change ZSH shell to Bash
+set_up_shell:
+	zsh shell.sh
 
 ## install_bashftw - Install and set up bash-ftw
 install_bashftw:
@@ -24,7 +29,7 @@ install_bashftw:
 
 ## install_brew - Install brew packages
 install_brew:
-	sh brew.sh
+	sh ../brew.sh
 
 ## decrypt_private_files - Decrypt private files
 decrypt_private_files:
@@ -32,7 +37,7 @@ decrypt_private_files:
 
 ## set_up_extras - Run extra utilities
 set_up_extras:
-	sh extras.sh
+	sh ../extras.sh
 
 ## install_dotfiles - Copy files to home directory
 install_dotfiles:
@@ -53,11 +58,11 @@ set_up_gpg:
 
 ## install_ides - Install IDEs
 install_ides:
-	sh ides.sh
+	sh ../ides.sh
 
 ## install_jetbrains - Install JetBrains IDEs
 install_jetbrains:
-	sh jetbrains.sh
+	sh ../jetbrains.sh
 
 ## set_up_ssh_keys - Set up SSH keys
 set_up_ssh_keys:
@@ -69,43 +74,39 @@ install_langs:
 
 ## install_dotnet - Install .NET SDKs
 install_dotnet:
-	sh langs/net.sh
+	sh ../langs/net.sh
 
 ## install_node - Install Node.js and NPM
 install_node:
-	sh langs/node.sh
+	sh ../langs/node.sh
 
 ## install_python - Install Python and Pip
 install_python:
-	sh langs/python.sh
+	sh ../langs/python.sh
 
 ## install_ruby - Install Ruby and Gems
 install_ruby:
-	sh langs/ruby.sh
+	sh ../langs/ruby.sh
 
 ## install_go - Install Go
 install_go:
-	sh langs/go.sh
+	sh ../langs/go.sh
 
 ## install_java - Install Java
 install_java:
-	sh langs/java.sh
+	sh ../langs/java.sh
 
 ## install_php - Install PHP
 install_php:
-	sh langs/php.sh
+	sh ../langs/php.sh
 
 ## install_microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
 install_microsoft:
-	sh microsoft.sh
+	sh ../microsoft.sh
 
 ## clone_repos - Clone GitHub repositories
 clone_repos:
 	sh ../repos.sh
-
-## set_up_shell - Change ZSH shell to Bash
-set_up_shell:
-	zsh shell.sh
 
 .PHONY: all help install_bashftw install_brew set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
 

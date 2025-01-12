@@ -119,10 +119,7 @@ for dir in "$OPEN_FOLDER"/*; do
         do_symlink_folder_files_matching_pattern "$dir" "$HOME" ".bashrc*"
     fi
 done
-# Link .bashrc.$USER -> .bashrc.personal
-USERNAME_BASHRC_FILE="$HOME/.bashrc.$(whoami)"
-rm "$USERNAME_BASHRC_FILE"
-do_symlink_file "$HOME/.bashrc.personal" "$USERNAME_BASHRC_FILE"
+# Link 
 
 # Install crontab
 # shellcheck disable=SC2016

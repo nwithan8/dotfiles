@@ -6,18 +6,22 @@ help:
 # @param private_key_path - Path to GPG private key
 fresh-install: |
 	make set_up_shell
-	# make install_brew
 	make install_apt
-	make install_bashftw
+	make install_brew
 	# make set_up_ssh_keys # Already handled by clone process
 	make set_up_gpg "$(private_key_path)"
+	make install_git
+	make install_bashftw
 	make decrypt_private_files
 	make install_dotfiles
-	make install_git
 	# make install_github # Already handled by clone process
 	make clone_repos
 	make install_langs
 	make install_ides
+
+## set_up_shell - Set up preferred shell
+set_up_shell:
+	sh shell.sh
 
 ## install_bashftw - Install and set up bash-ftw
 install_bashftw:
@@ -27,13 +31,17 @@ install_bashftw:
 install_apt:
 	sh apt/packages.sh
 
+## install_brew - Install Homebrew and packages
+install_brew:
+	sh ../brew.sh
+
 ## decrypt_private_files - Decrypt private files
 decrypt_private_files:
 	git-crypt unlock
 
 ## set_up_extras - Run extra utilities
 set_up_extras:
-	sh extras.sh
+	sh ../extras.sh
 
 ## install_dotfiles - Copy files to home directory
 install_dotfiles:
@@ -54,11 +62,11 @@ set_up_gpg:
 
 ## install_ides - Install IDEs
 install_ides:
-	sh ides.sh
+	sh ../ides.sh
 
 ## install_jetbrains - Install JetBrains IDEs
 install_jetbrains:
-	sh jetbrains.sh
+	sh ../jetbrains.sh
 
 ## set_up_ssh_keys - Set up SSH keys
 set_up_ssh_keys:
@@ -70,35 +78,35 @@ install_langs:
 
 ## install_dotnet - Install .NET SDKs
 install_dotnet:
-	sh langs/net.sh
+	sh ../langs/net.sh
 
 ## install_node - Install Node.js and NPM
 install_node:
-	sh langs/node.sh
+	sh ../langs/node.sh
 
 ## install_python - Install Python and Pip
 install_python:
-	sh langs/python.sh
+	sh ../langs/python.sh
 
 ## install_ruby - Install Ruby and Gems
 install_ruby:
-	sh langs/ruby.sh
+	sh ../langs/ruby.sh
 
 ## install_go - Install Go
 install_go:
-	sh langs/go.sh
+	sh ../langs/go.sh
 
 ## install_java - Install Java
 install_java:
-	sh langs/java.sh
+	sh ../langs/java.sh
 
 ## install_php - Install PHP
 install_php:
-	sh langs/php.sh
+	sh ../langs/php.sh
 
 ## install_microsoft - Install Microsoft IDEs (VSCode and Visual Studio)
 install_microsoft:
-	sh microsoft.sh
+	sh ../microsoft.sh
 
 ## clone_repos - Clone GitHub repositories
 clone_repos:
