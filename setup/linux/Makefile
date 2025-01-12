@@ -14,6 +14,7 @@ fresh-install: |
 	make install_bashftw
 	make decrypt_private_files
 	make install_dotfiles
+	make install_notes
 	# make install_github # Already handled by clone process
 	make clone_repos
 	make install_langs
@@ -47,9 +48,13 @@ set_up_extras:
 install_dotfiles:
 	sh ../files.sh "$(shell pwd)/../.." # This works because the user has to be in the linux directory to run this command
 
+## install_notes - Set up Obsidian notes vault
+install_notes:
+	sh ../notes.sh
+
 ## install_git - Set up Git
 install_git:
-	sh ../git.sh
+	sh git.sh
 
 ## install_github - Set up GitHub
 install_github:
