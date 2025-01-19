@@ -3,3 +3,8 @@ function kill-app() {
 	APP_NAME=$1
 	pkill -P $(pgrep $APP_NAME)
 }
+
+function install-deb() {
+	DEB_FILE="$1"
+	sudo gdebi "$DEB_FILE"
+}

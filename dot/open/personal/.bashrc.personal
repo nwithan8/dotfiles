@@ -63,6 +63,7 @@ eval "$(zoxide init bash)"
 # More advanced cat
 alias cat="bat"
 alias cleancat="/bin/cat"
+alias classiccat="cleancat"
 
 # Trash on Unix
 alias rm="trash" # Send args to "trash" function below

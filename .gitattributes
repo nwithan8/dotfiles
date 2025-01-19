@@ -1,1 +1,2 @@
 dot/secret/** filter=git-crypt diff=git-crypt
+setup/ssh_key_destinations.txt filter=git-crypt diff=git-crypt

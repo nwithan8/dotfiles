@@ -7,12 +7,11 @@ help:
 all: |
 	make set_up_shell
 	make install_brew
-	make install_bashftw
-	make set_up_ssh_keys
 	make set_up_gpg "$(private_key_path)"
 	make install_git
-	make install_bashftw
 	make decrypt_private_files
+	make set_up_ssh_keys
+	make install_bashftw
 	make install_dotfiles
 	make install_notes
 	make install_github
