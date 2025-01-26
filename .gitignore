@@ -4,3 +4,6 @@
 # Don't ignore encrypted files or open files
 !/dot/encrypted/*
 !/dot/open/*
+
+# Ignore IDEA (JetBrains) files
+.idea
