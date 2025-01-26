@@ -83,6 +83,10 @@ alias bw='NODE_OPTIONS="--no-deprecation" bw'
 alias cd=z
 alias cdi=zi
 
+# Use meteor for git commit
+alias commit="meteor"
+alias gitcommit="commit"
+
 ####### Shortcuts (call directly)
 
 # Refresh pyenv versions
