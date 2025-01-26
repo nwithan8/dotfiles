@@ -5,6 +5,7 @@ bitwarden-cli
 cast-text
 charmbracelet/tap/charm
 charmbracelet/tap/freeze
+charmbracelet/tap/mods
 clienv
 composer
 cowsay
@@ -23,6 +24,7 @@ go
 golangci-lint
 gradle
 grep
+gum
 htop
 imagemagick
 jpeg
@@ -38,10 +40,11 @@ nvm
 openjdk
 openssl
 opus
-pcopy
+nwithan8/tap/pcopy
 pcp
 php
 platformio
+pop
 python-certifi
 rar
 rbenv
