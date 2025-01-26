@@ -6,3 +6,4 @@ python3-pip
 wget
 libimage-exiftool-perl
 gdebi
+pass

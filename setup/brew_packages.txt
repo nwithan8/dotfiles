@@ -40,6 +40,7 @@ nvm
 openjdk
 openssl
 opus
+pass
 nwithan8/tap/pcopy
 pcp
 php
