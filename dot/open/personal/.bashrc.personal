@@ -152,6 +152,13 @@ most_used_commands() {
     history | awk '{print $4}' | sort | uniq -c | sort -nr | head -n "$count"
 }
 
+# Mirror a repo to Charm Soft-Serve
+function soft_mirror() {
+    name=$1
+    github_url=$2
+    ssh soft repo import -m "$name" "$github_url"
+}
+
 # Paste file contents to Hastebin
 haste() {
     a=$(cat $1);
@@ -177,6 +184,18 @@ ppaste() {
 # Paste a directory from the pcopy server to a local directory
 ppastedir() {
     pcopy paste "$1" > "$1.zip"
+}
+
+# Send a file to PairDrop
+function airdrop() {
+    # If pairdrop is not installed, complain
+    if ! command -v pairdrop &> /dev/null; then
+        echo "PairDrop is not installed. Please install it: https://github.com/schlagmichdoch/PairDrop/blob/master/docs/how-to.md#send-directly-via-command-line-interface"
+    fi
+    # Set PairDrop domain
+    pairdrop -d "$PAIRDROP_HOST"
+    # Send file
+    pairdrop "$1"
 }
 
 # Install rbenv easily

@@ -71,13 +71,6 @@ alias secret="charm kv"
 
 ####### Shortcuts (call directly)
 
-# Mirror a repo to Charm Soft-Serve
-function soft_mirror() {
-    name=$1
-    github_url=$2
-    ssh soft repo import -m "$name" "$github_url"
-}
-
 # Convert UNIX timestamp to human-readable datetime
 function read_unix_ts() {
     date -r $1
@@ -93,14 +86,6 @@ function set_java() {
     # Will set JAVA_HOME to the first matching version, or latest if none match
     export JAVA_HOME=$(/usr/libexec/java_home -v $1)
     echo "Java version set to $JAVA_HOME"
-}
-
-# Send a file to PairDrop
-function airdrop() {
-    # Set PairDrop domain
-    pairdrop -d "$PAIRDROP_HOST"
-    # Send file
-    pairdrop "$1"
 }
 
 # Transfer to transfer.sh and copy link to clipboard
