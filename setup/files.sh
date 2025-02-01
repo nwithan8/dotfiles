@@ -177,6 +177,8 @@ for dir in "$CONFIG_FILES_FOLDER"/*; do
         do_symlink_folder_files_matching_pattern "$dir" "$HOME/.config/$base_dir" "*"
     fi
 done
+# for each file in CONFIG_FILES_FOLDER, symlink it to the same name in ~/.config
+do_symlink_folder_files "$CONFIG_FILES_FOLDER" "$HOME/.config"
 
 # Link any dot/secret/personal/.config/X/FILE to ~/.config/X/FILE
 CONFIG_FILES_FOLDER="$SECRET_FOLDER/personal/.config"
@@ -190,6 +192,8 @@ for dir in "$CONFIG_FILES_FOLDER"/*; do
         do_symlink_folder_files_matching_pattern "$dir" "$HOME/.config/$base_dir" "*"
     fi
 done
+# for each file in CONFIG_FILES_FOLDER, symlink it to the same name in ~/.config
+do_symlink_folder_files "$CONFIG_FILES_FOLDER" "$HOME/.config"
 
 # Link scripts
 SCRIPTS_DIR="$HOME/.scripts"
