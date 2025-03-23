@@ -5,7 +5,7 @@ Run `make all private_key_path=/path/to/private/gpg/key` to run all setup proces
 This will, in order:
 - Set the shell to Bash
 - Install Homebrew and all required packages
-- Install BashFTW
+- Install Bash profile
 - Generate SSH keys
 - Import provided GPG key
 - Decrypt all encrypted files using the provided GPG key

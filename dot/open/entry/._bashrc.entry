@@ -1,0 +1,471 @@
+#!/bin/bash
+
+# don't execute if not an interactive BASH shell
+# `$-` shows `i` if an interactive shell
+[[ ${-#*i} != ${-} ]] || return
+
+# Enable START/STOP output control (XON/XOFF flow control)
+# https://superuser.com/questions/159106/reverse-i-search-in-bash
+stty -ixon
+
+
+################################################################################
+# Bash Session Meta
+
+
+# determine the Kernel type
+KERNEL=`uname -s`
+
+function determine_bashrc {
+    if [ $KERNEL == 'Darwin' ] && [ -f $HOME/.bash_profile ]
+    then
+        BASHRC_FILE=$HOME/.bash_profile
+    elif [ -f $HOME/.bash_aliases ]
+    then
+        BASHRC_FILE=$HOME/.bash_aliases
+elif [ -f $HOME/.bashrc ]
+    then
+        BASHRC_FILE=$HOME/.bashrc
+    else
+        BASHRC_FILE=''
+    fi
+}
+determine_bashrc
+
+if [[ ${BASHFTW} == 1 ]]
+then
+    # Avoid double load
+    return
+else
+    # set sentinel value to prevent double load
+    BASHFTW=1
+
+    echo "Loading dotfiles..."
+fi
+
+function rebash {
+    # force reload
+    BASHFTW=0
+
+    determine_bashrc
+
+    # reloads ~/.bashrc, ~/.bash_aliases, or ~/.bash_profile
+
+    if [[ $BASHRC_FILE ]]
+    then
+        echo "Reloading ${BASHRC_FILE}"
+        source $BASHRC_FILE
+    fi
+}
+
+
+################################################################################
+# BASH globals
+
+
+# http://en.wikipedia.org/wiki/Umask
+umask 0002
+
+
+################################################################################
+# BASH functions
+
+
+function parse_git_branch {
+    if [[ ! -z $1 ]] && [[ $1 == '-p' ]]
+    then
+        SHOW_PARENS=1
+        shift
+    fi
+
+    TEST_GIT_REPO=`git rev-parse 2> /dev/null > /dev/null`
+    if [[ $? ]]
+    then
+        CURRENT_GIT_BRANCH=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+    else
+        CURRENT_GIT_BRANCH=''
+    fi
+
+    if [[ ${CURRENT_GIT_BRANCH} ]]
+    then
+        if [[ ${SHOW_PARENS} ]]
+        then
+            echo "(${CURRENT_GIT_BRANCH})"
+        else
+            echo "${CURRENT_GIT_BRANCH}"
+        fi
+    fi
+
+    unset SHOW_PARENS
+}
+
+function grep-kill {
+    PATTERN=$1
+    ps -A | grep ${PATTERN} | grep -v grep | awk '{print $1}' | xargs kill
+}
+
+function kill-port() {
+    # Courtesy of: https://github.com/Justintime50
+    # See `man kill` for allowed kill signals
+    PORT=$1
+    SIGNAL=$2
+    SUDO=$3
+
+    SIGNAL_ARG=""
+    PIDS=($($SUDO lsof -t -i:$PORT | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g'))
+
+    if [[ ! -z $SIGNAL ]]
+    then
+        if [[ "-1 -HUP -2 -INT -3 -QUIT -6 -ABRT -9 -KILL -14 -ALRM -15 -TERM" =~ $SIGNAL ]]
+        then
+            SIGNAL_ARG=${SIGNAL}
+        else
+            echo "Unknown kill signal: ${SIGNAL}"
+        fi
+    fi
+
+    if [ "$PIDS" ]
+    then
+        for pid in "${PIDS[@]}"; do
+            echo "Killing process $pid..."
+            echo ${SUDO} kill ${SIGNAL_ARG} ${pid}
+            ${SUDO} kill ${SIGNAL_ARG} ${pid}
+        done
+    else
+        echo "No process running on port ${PORT}"
+    fi
+}
+
+function settitle {
+    echo -ne "\e]0;$1\a"
+}
+
+
+##
+# Node.js
+function n {
+   $(npm bin)/$@
+}
+
+################################################################################
+# Prompt
+#
+# \d - Current date
+# \t - Current time
+# \h - Host name
+# \# - Command number
+# \u - User name
+# \W - Current working directory (ie: Desktop/)
+# \w - Current working directory, full path (ie: /Users/Admin/Desktop)
+#
+# Color codes:
+# - https://unix.stackexchange.com/questions/124407/what-color-codes-can-i-use-in-my-ps1-prompt
+# - https://misc.flogisoft.com/bash/tip_colors_and_formatting
+#
+# Default Mac Style: PS1="\h:\W \u$"
+# Ubuntu Style: export PS1="\u@\h:\w$ "
+#
+export PS1="\[\033[01;90m\][\t] \[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;36m\]\$(parse_git_branch -p)\[\033[01;34m\]\$\[\033[00m\] "
+
+
+################################################################################
+# exports
+
+
+# local scripts and /usr/local/bin, /usr/local/sbin
+PATH=$HOME/bin:$PATH:/usr/local/sbin:/usr/local/bin
+export PATH
+
+
+# GPG
+export GPG_TTY=$(tty)
+
+# RipGrep is better than `ag`:
+# - https://github.com/BurntSushi/ripgrep
+# - https://github.com/ggreer/the_silver_searcher
+export SEARCH_UTIL=rg
+
+export HISTTIMEFORMAT="%Y-%m-%d %T "
+
+export CLICOLOR=1
+export CLICOLOR_FORCE=1
+
+# https://docs.python.org/2/using/cmdline.html#envvar-PYTHONDONTWRITEBYTECODE
+# Disable writing of Python bytecode (*.pyc files) -- negligible performance issue in dev
+export PYTHONDONTWRITEBYTECODE=1
+
+export TMPDIR=/tmp
+
+
+################################################################################
+# aliases
+
+
+##
+# basic commands
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias ..6='cd ../../../../../..'
+alias c='cd'
+alias l='ls -CF'
+alias la='ls -aF'
+alias ll='ls -lhF'
+alias lla='ls -lahF'
+alias llt='ls -lhtF'
+alias llat='ls -lahtF'
+alias pu='pushd'
+alias po='popd'
+alias rm='rm -i'
+alias cp='cp -i'
+alias grep='grep --color=always'
+alias lessr='less -R'
+alias morer='more -R'
+alias retmux='tmux source-file ~/.tmux.conf'
+alias show-functions='declare -F'
+
+# common typos
+alias cd..='cd ..'
+
+##
+# GPG
+alias gpgl='gpg --list-secret-keys --keyid-format=long'
+alias gpg-export-pubkey='gpg --armor --export'
+alias gpg-export-secret='gpg --export-secret-keys --armor'
+alias gpg-gen='gpg --full-generate-key'
+alias gpg-restart='gpgconf --kill all'
+alias gpg-test='echo "test" | gpg --clearsign'
+
+##
+# dev
+alias edithosts='sudo emacs /etc/hosts'
+alias rmemacsbackups='for FILE in `find . -name "*~"`; do rm -i $FILE; done'
+alias svns='svn status'
+
+##
+# Python helpers
+alias ipy='ipython'
+alias rmpyc='for FILE in `find . -name "*.pyc"`; do rm -i $FILE; done'
+alias vipy='venv/bin/ipython'
+alias vpip='venv/bin/pip'
+alias vpy='venv/bin/python'
+alias vpytest='venv/bin/pytest'
+
+##
+# Emacs helpers
+alias rmelc='for FILE in `find . -name "*.elc"`; do rm -i $FILE; done'
+
+##
+# Git
+alias gb='git branch'
+alias gbr='git branch -r'  # list Git branches on remote
+alias gca='git commit -a'
+alias gcam='git commit --amend'
+alias gcb='git create-branch'
+alias gcd='git checkout develop'
+alias gcm='git checkout master'
+alias gco='git checkout'
+alias gcp='git checkout gh-pages'
+alias gdsf='git dsf'
+alias glog='git log'
+alias gpl='git pull'
+alias gpu='git push'
+alias gpuuo='parse_git_branch | xargs git push -u origin'  # push new branch and set origin remote as upstream
+alias groi='git rebase -i origin/master'
+alias gsq='git-squash'
+alias gst='git status'
+alias gitup='export GIT_TMP_BRANCH=`git rev-parse --abbrev-ref HEAD | tr -d "\n"`; git checkout master; git fetch origin; git rebase origin/master; git checkout ${GIT_TMP_BRANCH}'
+alias gitdeletemerged="git branch --merged master | grep -v 'master$' | xargs git branch -d"
+
+
+# sync all Git repository subdirectories within current directory
+function gsa {
+    cwd=`pwd`
+    echo "Syncing all Git repository subdirectories within $cwd"
+
+    # strip color codes from `ls`
+    # See: https://stackoverflow.com/questions/17998978/removing-colors-from-output
+    for dir in `ls | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'`
+    do
+        fulldir="${cwd}/${dir}"
+
+        if [[ -d $fulldir ]]
+        then
+            echo -e "--------------------\n"
+            echo -e "Going in to $fulldir\n"
+            cd $fulldir
+            echo -e "Fetching latest code from origin...\n"
+            git fetch origin
+            echo -e "Updating master...\n"
+            git co master && git merge origin/master
+            #git gc
+        else
+            echo "Skipping $fulldir"
+        fi
+    done
+
+    cd $cwd
+}
+
+# create a new Git branch tracking remote branch
+function gcob {
+    git checkout -B $1 origin/$1
+}
+
+function gitdeletenonmaster {
+    for branch in `git branch | awk '{ print $1}' | grep -v '^*'`; do if [[ "$branch" != "master" ]]; then git branch -D $branch; fi; done
+}
+
+function git-squash {
+    NUM_COMMITS=$@;
+    re='^[0-9]+$'
+    if ! [[ $NUM_COMMITS =~ $re ]]
+    then
+        echo 'Error: git-squash expects a number of commits to squash'
+    else
+        git reset --soft HEAD~${NUM_COMMITS} && git commit --edit -m"$(git log --format=%B --reverse HEAD..HEAD@{1})"
+    fi
+}
+
+function git-ls-changed {
+    git status --porcelain | grep M | awk '{print $2}'
+}
+
+function git-delete-tag {
+    # delete tag locally
+    git tag -d $1
+    # delete tag in all remotes
+    for remote in $(git remote)
+    do
+        git push $remote :refs/tags/$1
+    done
+}
+
+function git-rename-branch {
+    # renames the local branch and on ALL remotes
+    git branch -m $1 $2
+    for remote in $(git remote)
+    do
+        git push $remote -u $2
+        git push $remote --delete $1
+    done
+}
+
+
+##
+# Editing, Diffing, Reading, etc
+
+
+function edit-matching-files {
+    QUERY=${1}
+    if [[ -z $QUERY ]]
+    then
+        echo 'No query entered'
+    else
+        $EDITOR $(${SEARCH_UTIL} "${1}" | cut -d : -f 1 | sort | uniq)
+    fi
+}
+
+function dsf {
+    F1=$1
+    F2=$2
+    diff -u ${F1} ${F2} | diff-so-fancy
+}
+
+
+
+
+##
+# MySQL
+
+
+function tailmysql {
+    sudo mysql -e "SET GLOBAL general_log = 'ON';"
+    sudo less +F $(mysql -Nse "SELECT @@general_log_file")
+    sudo mysql -e "SET GLOBAL general_log = 'OFF';"
+}
+
+
+##
+# TMUX
+alias tma='tmux attach -t'
+alias tmkill='tmux kill-session -t'
+alias tmls='tmux ls'
+alias tmnew='tmux new -s'
+
+##
+# utils
+alias jq='jq -C'
+alias json='python -mjson.tool'
+alias keyup='. ssh-agent-init;ssh-keychain-init'
+
+if [ `command -v ssh-agent-init` ]
+then
+    . ssh-agent-init
+else
+    echo 'ssh-agent-init command not defined... skipped'
+fi
+
+##
+# Docker
+alias dcdu='docker-compose down --remove-orphans;docker-compose up -d'
+
+##
+# Hacktoolkit (https://github.com/hacktoolkit)
+# See also: http://github.com/hacktoolkit/python-htk
+alias fdb='touch /tmp/fdebug.log; tail -f /tmp/fdebug.log'
+
+##
+# Internet / Networking
+
+ECHO_IP_URL='ifconfig.co'
+alias check-ip="curl ${ECHO_IP_URL}"
+alias check-ipv4="curl -4 ${ECHO_IP_URL}"
+alias check-ipv6="curl -6 ${ECHO_IP_URL}"
+alias check-proxy-ip="curl -x socks5h://localhost:1080 ${ECHO_IP_URL}"
+alias check-proxy-ipv4="curl -4 -x socks5h://localhost:1080 ${ECHO_IP_URL}"
+alias check-proxy-ipv6="curl -6 -x socks5h://localhost:1080 ${ECHO_IP_URL}"
+
+
+################################################################################
+# directories
+
+alias code='cd ~/Documents/Code'
+
+
+################################################################################
+# source other .bashrc files
+
+
+# Linux
+[[ $KERNEL == 'Linux' ]] && [[ -s "$HOME/._bashrc.entry.linux" ]] && source "$HOME/._bashrc.entry.linux"
+
+# Mac
+[[ $KERNEL == 'Darwin' ]] && [[ -s "$HOME/._bashrc.entry.mac" ]] && source "$HOME/._bashrc.entry.mac"
+
+# User .bashrc
+[[ -s "$HOME/.bashrc.$USER" ]] && source "$HOME/.bashrc.$USER"
+
+# Bash completion support for Git. Based on https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+[[ -s "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
+
+# Load various .bashrc.* customizations
+# Define BASHRC_GROUPS as an export in the .bashrc.$USER file
+for group in ${BASHRC_GROUPS}
+do
+    BASHRC_FILE="$HOME/.bashrc.${group}"
+    [[ -s $BASHRC_FILE ]] && source ${BASHRC_FILE}
+done
+
+
+################################################################################
+# Load direnv if installed
+# https://github.com/direnv/direnv
+
+
+if [[ -s `which direnv` ]]
+then
+    eval "$(direnv hook bash)"
+fi

@@ -116,7 +116,7 @@ done
 for dir in "$OPEN_FOLDER"/*; do
     if [ -d "$dir" ]; then
         # Override existing .bashrc files, don't worry about backing them up
-        do_symlink_folder_files_matching_pattern "$dir" "$HOME" ".bashrc*"
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME" ".bashrc*"  # Will skip the "._bashrc.entry" files due to pattern difference
     fi
 done
 # Link .bashrc.$USER -> .bashrc.personal

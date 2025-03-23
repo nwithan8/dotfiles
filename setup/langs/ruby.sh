@@ -9,5 +9,5 @@ echo 'eval "$(rbenv init -)"' | sudo tee -a ~/.bashrc
 rbenv install "$(rbenv install -l | grep -v - | tail -1)" # Install latest version of ruby
 
 echo "Installing Ruby utilities..."
-# Bundler
-gem install bundler
+# Bundler (need to run as root)
+sudo gem install bundler

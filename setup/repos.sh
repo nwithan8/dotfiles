@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CODE_DIRECTORY="~/Documents/code"
+CODE_DIRECTORY="$HOME/Documents/code"
 
 # Make code folder
 echo "Setting up code folder..."

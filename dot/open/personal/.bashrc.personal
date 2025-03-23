@@ -11,6 +11,7 @@ eval export $(cat "$HOME/.dotfiles_secrets") || true # Load secrets from .dotfil
 
 # Use nano as default editor
 export EDITOR=nano
+export SVN_EDITOR=nano
 
 
 ####### Set up folders and files
@@ -58,6 +59,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Load zoxide
 eval "$(zoxide init bash)"
 
+####### Start Up
+fortune | cowsay -s
+
 ####### Aliases
 
 # More advanced cat
@@ -86,6 +90,10 @@ alias cdi=zi
 # Use meteor for git commit
 alias commit="meteor"
 alias gitcommit="commit"
+
+# Charm tools
+alias readme="glow"
+alias secret="charm kv"
 
 ####### Shortcuts (call directly)
 
@@ -408,4 +416,4 @@ function _download_encrypted_transfer() {
 
 ####### Imports other bash files
 
-export BASHRC_GROUPS=''  # BashFTW will load a .bashrc.X file for each group
+export BASHRC_GROUPS=''  # Bash entry will load a .bashrc.X file for each group

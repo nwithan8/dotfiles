@@ -12,7 +12,7 @@ fresh-install: |
 	make install_git
 	make decrypt_private_files
 	make set_up_ssh_keys
-	make install_bashftw
+	make install_bash_profile
 	make install_dotfiles
 	make install_notes
 	make install_github
@@ -24,9 +24,9 @@ fresh-install: |
 set_up_shell:
 	sh shell.sh
 
-## install_bashftw - Install and set up bash-ftw
-install_bashftw:
-	sh ../bashftw.sh
+## install_bash_profile - Install and set up bash profile
+install_bash_profile:
+	sh ../bash_profile.sh "$(shell pwd)/../.." # This works because the user has to be in the linux directory to run this command
 
 ## install_apt - Install packages via apt
 install_apt:
@@ -79,7 +79,14 @@ set_up_ssh_keys:
 
 ## install_langs - Install required programming languages and SDKs
 install_langs:
-	sh ../langs.sh
+	sh ../langs/python.sh
+        sh ../langs/php.sh
+        sh ../langs/node.sh
+        sh ../langs/ruby.sh
+        sh ../langs/java.sh
+        sh ../langs/go.sh
+        sh ../langs/net.sh
+        sh ../langs/rust.sh
 
 ## install_dotnet - Install .NET SDKs
 install_dotnet:
@@ -118,6 +125,6 @@ clone_repos:
 	sh ../repos.sh
 
 
-.PHONY: first-time all help install_bashftw set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
+.PHONY: first-time all help install_bash_profile set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
 
 
