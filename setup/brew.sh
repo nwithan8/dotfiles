@@ -6,9 +6,12 @@
 echo "Installing brew package manager..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-echo >> ~/.bashrc
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+KERNEL=`uname -s`
+if [ $KERNEL == 'Darwin' ]
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ $KERNEL == 'Linux' ]
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 ## Install third-party taps
 # shellcheck disable=SC2162

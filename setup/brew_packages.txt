@@ -1,6 +1,7 @@
 1password-cli
 alchemist
 android-platform-tools
+bat
 bitwarden-cli
 cast-text
 charmbracelet/tap/charm
@@ -35,6 +36,7 @@ lua
 lunar
 mvn
 mysql
+nano
 node
 nvm
 openjdk
@@ -57,6 +59,7 @@ shellcheck
 sqlite
 swagger-codegen
 telnet
+temurin
 travis
 tree
 vhs
