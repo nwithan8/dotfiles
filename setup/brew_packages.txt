@@ -57,6 +57,7 @@ rtmpdump
 rust
 shellcheck
 sqlite
+ssh-copy-id
 swagger-codegen
 telnet
 temurin

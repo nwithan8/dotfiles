@@ -95,6 +95,13 @@ alias gitcommit="commit"
 alias readme="glow"
 alias secret="charm kv"
 
+# Email
+alias email="neomutt"
+
+# Reddit
+alias rtv="python3 -m tuir"
+alias reddit="rtv"
+
 ####### Shortcuts (call directly)
 
 # Refresh pyenv versions
@@ -293,7 +300,8 @@ function ghpr_checkout_old() {
 
 # Create a Python virtual environment
 function make_py_venv() {
-    venv_path="$1"
+    default_path=".venv"
+    venv_path="${1:-$default_path}"
     if [ -z "$venv_path" ]; then
         echo "Usage: make_py_venv <venv_path>"
         return 1
@@ -301,6 +309,34 @@ function make_py_venv() {
 
     python3 -m venv "$venv_path"
     source "$venv_path/bin/activate"
+}
+
+# Load a Python virtual environment
+function load_py_venv() {
+    default_path=".venv"
+    venv_path="${1:-$default_path}"
+    if [ -z "$venv_path" ]; then
+        echo "Usage: load_py_venv <venv_path>"
+        return 1
+    fi
+
+    source "$venv_path/bin/activate"
+}
+
+# Run with venv Python
+function with_venv_py() {
+    venv_path="$1"
+    command=${@:2}
+
+    _with_venv "with_venv_py" "$venv_path" "python" $command
+}
+
+# Run with venv Pip
+function with_venv_pip() {
+    venv_path="$1"
+    command=${@:2}
+    
+    _with_venv "with_venv_pip" "$venv_path" "pip" $command
 }
 
 # Ask GitHub Copilot for help
@@ -317,6 +353,21 @@ function ask_copilot() {
 }
 
 ####### Internal functions (call indirectly)
+
+# Run command with Python virtual environment
+function _with_venv() {
+    usage="$1"
+    venv_path="$2"
+    if [ -z "$venv_path" ]; then
+        echo "Usage: $usage <venv_path>"
+        return 1
+    fi
+
+    venv_command="$3"
+    command=${@:4}
+
+    "$venv_path/bin/$venv_command" $command
+}
 
 # Find all versions of Python in pyenv with matching major.minor version
 function _pyenv_find_versions() {

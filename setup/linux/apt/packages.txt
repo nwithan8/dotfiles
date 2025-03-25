@@ -7,3 +7,8 @@ wget
 libimage-exiftool-perl
 gdebi
 pass
+openssh-server
+lynx
+neomutt
+rtv
+tmux
