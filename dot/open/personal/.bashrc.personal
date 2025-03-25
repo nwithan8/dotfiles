@@ -71,6 +71,7 @@ alias classiccat="cleancat"
 
 # Trash on Unix
 alias rm="trash" # Send args to "trash" function below
+alias ogrm="/bin/rm"
 
 # Use pyenv pip
 alias pip="python3 -m pip"

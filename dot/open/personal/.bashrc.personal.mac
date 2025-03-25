@@ -35,6 +35,11 @@ export JAVA_23_HOME=$(/usr/libexec/java_home -v 23)
 # Set default Java version
 export JAVA_HOME=$JAVA_23_HOME
 
+####### Start-up
+
+# Delete user mailbox (use ogrm to avoid alias)
+ogrm -f /var/$USER/mail || true
+
 ####### Aliases
 
 alias copy="cp -r" # Replicate Windows "copy"
