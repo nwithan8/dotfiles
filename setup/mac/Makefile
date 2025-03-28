@@ -18,6 +18,7 @@ all: |
 	make clone_repos
 	make install_langs
 	make install_ides
+	make post_install_tweaks
 
 ## set_up_shell - Change ZSH shell to Bash
 set_up_shell:
@@ -122,6 +123,10 @@ install_microsoft:
 ## clone_repos - Clone GitHub repositories
 clone_repos:
 	sh ../repos.sh
+
+## post_install_tweaks - Make MacOS-specific post-install tweaks
+post_install_tweaks:
+	sh ./mac_post_install_tweaks.sh
 
 .PHONY: all help install_bash_profile install_brew set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
 

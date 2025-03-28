@@ -7,6 +7,8 @@ cast-text
 charmbracelet/tap/charm
 charmbracelet/tap/freeze
 charmbracelet/tap/mods
+charmbracelet/tap/wishlist
+charmbracelet/tap/skate
 clienv
 composer
 cowsay

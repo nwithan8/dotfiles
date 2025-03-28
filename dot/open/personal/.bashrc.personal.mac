@@ -37,8 +37,8 @@ export JAVA_HOME=$JAVA_23_HOME
 
 ####### Start-up
 
-# Delete user mailbox (use ogrm to avoid alias)
-ogrm -f /var/$USER/mail || true
+# Always empty user mailbox
+> /var/mail/$USER
 
 ####### Aliases
 
