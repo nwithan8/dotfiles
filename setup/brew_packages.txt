@@ -2,6 +2,7 @@
 alchemist
 android-platform-tools
 bat
+bitwarden
 bitwarden-cli
 cast-text
 charmbracelet/tap/charm
