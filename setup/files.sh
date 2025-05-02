@@ -66,6 +66,7 @@ do_symlink_folder_files_matching_pattern() {
 
 do_symlink_folder_files() {
   do_symlink_folder_files_matching_pattern "$1" "$2" "*"
+  do_symlink_folder_files_matching_pattern "$1" "$2" ".*"
 }
 
 do_backup_and_symlink_file() {
