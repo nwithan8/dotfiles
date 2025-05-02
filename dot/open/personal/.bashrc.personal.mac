@@ -73,6 +73,11 @@ function read_unix_ts() {
     date -r $1
 }
 
+# Get file size in bytes
+function file_size_bytes() {
+    stat -f "%z" $1
+}
+
 # Copy contents of a file
 function copy_content() {
     cat $1 | pbcopy

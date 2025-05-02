@@ -8,3 +8,8 @@ function install-deb() {
 	DEB_FILE="$1"
 	sudo gdebi "$DEB_FILE"
 }
+
+# Get file size in bytes
+function file_size_bytes() {
+    stat -c "%s" $1
+}

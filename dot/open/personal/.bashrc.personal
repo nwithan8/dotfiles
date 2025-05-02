@@ -154,6 +154,13 @@ function pyenv_install_latest_patch() {
     done
 }
 
+# Download the latest release from GitHub
+function download_latest_github_release() {
+  USERNAME_PROJECT="$1" # e.g. nwithan8/dotfiles
+  link=$(curl -s 'https://api.github.com/repos/$USERNAME_PROJECT/releases/latest' | jq -r '.assets[].browser_download_url')
+  wget "$link"
+}
+
 # Trash on Unix
 function trash() {
   for file in "$@"; do
@@ -162,7 +169,7 @@ function trash() {
 }
 
 # Get most-used commands
-most_used_commands() {
+function most_used_commands() {
     # Count from first argument, or 10 if no argument
     count=${1:-10}
     history | awk '{print $4}' | sort | uniq -c | sort -nr | head -n "$count"
@@ -176,29 +183,29 @@ function soft_mirror() {
 }
 
 # Paste file contents to Hastebin
-haste() {
+function haste() {
     a=$(cat $1);
     p=$(curl -X POST -s -d "$a" $HASTEBIN_URL/documents | awk -F '"' '{print $4}');
     echo "$HASTEBIN_URL/$p";
 }
 
 # Copy a local file to the pcopy server
-pcp() {
+function pcp() {
     pcopy copy "$1" < "$1"
 }
 
 # Copy a local directory to the pcopy server
-pcpdir() {
+function pcpdir() {
     pcopy copy $(basename "$1") "$1"
 }
 
 # Paste a file from the pcopy server to a local file
-ppaste() {
+function ppaste() {
     pcopy paste "$1" > "$1"
 }
 
 # Paste a directory from the pcopy server to a local directory
-ppastedir() {
+function ppastedir() {
     pcopy paste "$1" > "$1.zip"
 }
 
@@ -260,6 +267,30 @@ function upload_file() {
 function download_file() {
     url="$1"
     curl "$url"
+}
+
+# Restart a git branch (for when you're just stuck in rebase hell)
+function restart_git_branch() {
+    CURRENT_LOCAL_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+    CURRENT_REMOTE_BRANCH=$(git rev-parse --symbolic-full-name --abbrev-ref ${CURRENT_BRANCH_NAME}@{u})
+    read -p "This will WIPE your current \"$CURRENT_LOCAL_BRANCH_NAME\" branch and pull \"$CURRENT_REMOTE_BRANCH\". Are you sure? " -n 1 -r
+    echo # move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "So you have chosen death ..."
+        TEMP_BRANCH_NAME=$(openssl rand -base64 12)
+        echo "Moving to temporary branch ..."
+	git checkout -b "$TEMP_BRANCH_NAME"
+        echo "Deleting old \"$CURRENT_LOCAL_BRANCH_NAME\" branch ..."
+	git branch -d "$CURRENT_LOCAL_BRANCH_NAME"
+	echo "Fetching updates from remote ..."
+	git fetch
+	echo "Pulling a fresh copy of \"$CURRENT_REMOTE_BRANCH\" ..."
+	git checkout -b "$CURRENT_LOCAL_BRANCH_NAME" "$CURRENT_REMOTE_BRANCH"
+	echo "Cleaning up ..."
+	git branch -d "$TEMP_BRANCH_NAME"
+        echo "Complete"
+    fi
 }
 
 # Checkout an external GitHub PR (requires GH CLI)
