@@ -59,6 +59,7 @@ rsync
 rtmpdump
 rust
 shellcheck
+scrcpy
 sqlite
 ssh-copy-id
 swagger-codegen
