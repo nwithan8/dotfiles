@@ -1,6 +1,7 @@
 1password-cli
 alchemist
 android-platform-tools
+bash-completion
 bat
 bitwarden
 bitwarden-cli
@@ -37,15 +38,19 @@ libyaml
 localsend
 lua
 lunar
+lynx
+meteor
 mvn
 mysql
 nano
+neomutt
 node
 nvm
 openjdk
 openssl
 opus
 pass
+noti
 nwithan8/tap/pcopy
 pcp
 php
@@ -65,6 +70,7 @@ ssh-copy-id
 swagger-codegen
 telnet
 temurin
+terminal-notifier
 travis
 tree
 vhs
