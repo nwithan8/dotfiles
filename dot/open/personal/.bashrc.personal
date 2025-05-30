@@ -6,7 +6,6 @@ eval export $(cat "$HOME/.dotfiles_secrets") || true # Load secrets from .dotfil
 
 
 
-
 ###### Constants
 
 # Use nano as default editor
@@ -25,6 +24,9 @@ eval "$(mkdir -p ~/.Trash)" # This folder already exists on MacOS
 
 # Load bash completion scripts
 for script in /etc/bash_completion.d/*; do
+    [[ -r "$script" ]] && . "$script";
+done;
+for script in $HOME/.completion.d/**/*; do
     [[ -r "$script" ]] && . "$script";
 done;
 
@@ -60,7 +62,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 eval "$(zoxide init bash)"
 
 ####### Start Up
-fortune | cowsay -s
+# Cow fortune rainbow
+fortune "/opt/homebrew/Cellar/fortune/9708/share/games/fortunes" | cowsay -s | lolcatjs
+
 
 ####### Aliases
 
@@ -99,11 +103,30 @@ alias secret="charm kv"
 # Email
 alias email="neomutt"
 
+# Web Browser
+alias web='lynx'
+
 # Reddit
-alias rtv="python3 -m tuir"
+alias rtv="pyenv shell 3.10 && python3 -m pip install rtv && python3 -m rtv"
 alias reddit="rtv"
 
+####### Shell Completion
+
+# Makefile
+complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+
 ####### Shortcuts (call directly)
+
+# Activate a Python environment
+function venv_activate() {
+    if [ -d ".venv" ]; then
+        source .venv/bin/activate
+    elif [ -d "venv" ]; then
+        source venv/bin/activate
+    else
+        : # ignore if no .venv or venv
+    fi    
+}
 
 # Refresh pyenv versions
 function pyenv_refresh() {
@@ -236,6 +259,15 @@ function read_file() {
 function zip_dir() {
     dir="$1"
 	cd "$dir" && zip -r -q - .
+}
+
+# Generate a random string with OpenSSL
+function random_string_short() {
+    openssl rand -base64 16
+}
+
+function random_string_long() {
+    openssl rand -base64 64
 }
 
 # Encrypt a file

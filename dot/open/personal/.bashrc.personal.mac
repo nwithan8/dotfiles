@@ -1,6 +1,12 @@
 ####### Load modules and plugins
 
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh" # Homebrew bash_completion
+# Homebrew bash_completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
+# Load fzf fuzzy find history
+eval "$(fzf --bash)"
 
 # Use GNU sed instead of MacOS sed
 export PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
