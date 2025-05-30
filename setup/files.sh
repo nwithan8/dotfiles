@@ -51,6 +51,21 @@ do_symlink_file() {
   ln -s "$SRC_FILE" "$DEST_FILE" || true
 }
 
+do_symlink_folder() {
+  SRC_FOLDER=$1
+  DEST_FOLDER=$2
+
+  # Create destination folder if it doesn't exist
+  mkdir -p "$DEST_FOLDER" || true
+
+  # Remove symlink if it exists
+  do_remove_symlink "$DEST_FOLDER"
+
+  # Symlink folder
+  echo "Symlinking $SRC_FOLDER to $DEST_FOLDER"
+  ln -s "$SRC_FOLDER" "$DEST_FOLDER" || true
+}
+
 do_symlink_folder_files_matching_pattern() {
   SRC_FOLDER=$1
   DEST_FOLDER=$2
@@ -67,6 +82,26 @@ do_symlink_folder_files_matching_pattern() {
 do_symlink_folder_files() {
   do_symlink_folder_files_matching_pattern "$1" "$2" "*"
   do_symlink_folder_files_matching_pattern "$1" "$2" ".*"
+}
+
+do_symlink_folder_folders_matching_pattern() {
+  SRC_FOLDER=$1
+  DEST_FOLDER=$2
+  PATTERN=$3
+
+  # Symlink folders in folder
+  for folder in "$SRC_FOLDER"/$PATTERN; do
+    if [ -d "$folder" ]; then
+      echo "Found folder: $folder"
+      DEST_FOLDER_PATH="$DEST_FOLDER"
+      do_symlink_folder "$folder" "$DEST_FOLDER_PATH"
+    fi
+  done
+}
+
+do_symlink_folder_folders() {
+  do_symlink_folder_folders_matching_pattern "$1" "$2" "*"
+  do_symlink_folder_folders_matching_pattern "$1" "$2" ".*"
 }
 
 do_backup_and_symlink_file() {
@@ -176,6 +211,8 @@ for dir in "$CONFIG_FILES_FOLDER"/*; do
         base_dir=$(basename "$dir")
         # Override existing files, don't worry about backing them up
         do_symlink_folder_files_matching_pattern "$dir" "$HOME/.config/$base_dir" "*"
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME/.config/$base_dir" ".*"
+        do_symlink_folder_folders_matching_pattern "$dir" "$HOME/.config/$base_dir" "*"
     fi
 done
 # for each file in CONFIG_FILES_FOLDER, symlink it to the same name in ~/.config
@@ -188,13 +225,32 @@ echo "Installing secret personal .config files..."
 for dir in "$CONFIG_FILES_FOLDER"/*; do
     if [ -d "$dir" ]; then
         # Get base directory name
+        echo "Directory found: $dir"
         base_dir=$(basename "$dir")
+        echo "Base directory: $base_dir"
         # Override existing files, don't worry about backing them up
         do_symlink_folder_files_matching_pattern "$dir" "$HOME/.config/$base_dir" "*"
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME/.config/$base_dir" ".*"
+        do_symlink_folder_folders_matching_pattern "$dir" "$HOME/.config/$base_dir" "*"
     fi
 done
 # for each file in CONFIG_FILES_FOLDER, symlink it to the same name in ~/.config
 do_symlink_folder_files "$CONFIG_FILES_FOLDER" "$HOME/.config"
+
+# Link any dot/open/personal/.completion.d/X/FILE to ~/.completion.d/X/FILE
+COMPLETION_FILES_FOLDER="$OPEN_FOLDER/personal/.completion.d"
+echo "Installing open personal .completion.d files..."
+# for each directory in COMPLETION_FILES_FOLDER, find all files in each directory and symlink them to the same name in ~/.completion.d
+for dir in "$COMPLETION_FILES_FOLDER"/*; do
+    if [ -d "$dir" ]; then
+        # Get base directory name
+        base_dir=$(basename "$dir")
+        # Override existing files, don't worry about backing them up
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME/.completion.d/$base_dir" "*"
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME/.completion.d/$base_dir" ".*"
+        do_symlink_folder_folders_matching_pattern "$dir" "$HOME/.completion.d/$base_dir" "*"
+    fi
+done
 
 # Link scripts
 SCRIPTS_DIR="$HOME/.scripts"
