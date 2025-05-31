@@ -259,3 +259,18 @@ echo "Installing scripts to $SCRIPTS_DIR..."
 # Override existing files, don't worry about backing them up
 do_symlink_file "$REPO_LOCATION/scripts/bitwarden/bw_add_sshkeys.py" "$SCRIPTS_DIR/bw_add_sshkeys.py"
 do_symlink_file "$REPO_LOCATION/scripts/ntfy/ntfy_send.sh" "$SCRIPTS_DIR/ntfy_send.sh"
+
+# Link plugins
+PLUGINS_DIR="$HOME/.bashrc_plugins"
+REPO_PLUGINS_DIR="$OPEN_FOLDER/personal/.bashrc_plugins"
+mkdir -p "$PLUGINS_DIR" || true
+echo "Installing bashrc plugins to $PLUGINS_DIR..."
+for dir in "$REPO_PLUGINS_DIR/"*; do
+    if [ -d "$dir" ]; then
+        # Get base directory name
+        base_dir=$(basename "$dir")
+        # Override existing files, don't worry about backing them up
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME/.bashrc_plugins/$base_dir" "*"
+        do_symlink_folder_files_matching_pattern "$dir" "$HOME/.bashrc_plugins/$base_dir" ".*"
+    fi
+done

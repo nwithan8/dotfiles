@@ -527,6 +527,9 @@ function _download_encrypted_transfer() {
 [[ $KERNEL == 'Darwin' ]] && [[ -s "$HOME/.bashrc.personal.mac" ]] && source "$HOME/.bashrc.personal.mac"
 
 
+####### Source plugins
+source "$HOME/.bashrc_plugins/pre-exec/.bash-preexec" # Load pre-exec plugins
+source "$HOME/.bashrc_plugins/pre-exec/long_process_complainer.bash" # Load long-running command growler
 
 
 ####### Imports other bash files
