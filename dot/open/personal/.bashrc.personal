@@ -88,6 +88,9 @@ alias ghpr="gh pr"
 alias bwssh="$DOTSCRIPTS/bw_add_sshkeys.py"
 alias bw='NODE_OPTIONS="--no-deprecation" bw'
 
+# GPG paperkey
+alias paperkeywords="$DOTSCRIPTS/paperkeywords"
+
 # Replace cd with z
 alias cd=z
 alias cdi=zi
@@ -299,6 +302,129 @@ function upload_file() {
 function download_file() {
     url="$1"
     curl "$url"
+}
+
+# Export a GPG public key
+function export_gpg_public_key() {
+    key_id="$1"
+    output_file="${2:-${key_id}_pub.asc}"
+    if [ -z "$key_id" ]; then
+        echo "Usage: export_gpg_public_key <key_id>"
+        return 1
+    fi
+
+    # Export the key to a file
+    gpg --export "$key_id" | gpg --armor > "$output_file"
+    echo "Public key exported to $output_file"
+}
+
+# Export a GPG secret key
+function export_gpg_private_key() {
+    key_id="$1"
+    output_file="${2:-${key_id}_priv.asc}"
+    if [ -z "$key_id" ]; then
+        echo "Usage: export_paper_key <key_id>"
+        return 1
+    fi
+
+    # Export the key to a file
+    gpg --export-secret-keys "$key_id" | gpg --armor > "$output_file"
+    echo "Paper key exported to $output_file"
+}
+
+# Export a GPG secret key to a paper key
+function export_gpg_private_key_paper() {
+    key_id="$1"
+    output_file="${2:-${key_id}_priv.txt}"
+    if [ -z "$key_id" ]; then
+        echo "Usage: export_paper_key <key_id>"
+        return 1
+    fi
+
+    # Export the key to a file
+    gpg --export-secret-keys "$key_id" | paperkey | paperkeywords > "$output_file"
+    echo "Paper key exported to $output_file"
+}
+
+# Export a GPG secret key to QR codes
+function export_gpg_private_key_qr() {
+    key_id="$1"
+    output_file_prefix="${2:-${key_id}_priv}"
+    if [ -z "$key_id" ]; then
+        echo "Usage: export_paper_key <key_id>"
+        return 1
+    fi
+
+    # Export the key to a series of QR codes
+    temp_file=$(mktemp)
+    gpg --export-secret-key "$key_id" | paperkey --output-type raw | base64 > $temp_file
+    split -b 1000 $temp_file ${output_file_prefix}
+    for f in ${output_file_prefix}*; do
+        cat $f | qrencode -o $f.png -t png -Sv 40;
+    done
+    # Remove the files with the prefix NOT ending in .png
+    rm $temp_file ${output_file_prefix}*[^.png]
+    echo "QR codes exported to files prefixed with $output_file_prefix"
+}
+
+# Import a GPG public key from a file
+function import_gpg_public_key() {
+    key_file="$1"
+    if [ -z "$key_file" ]; then
+        echo "Usage: import_gpg_key <key_file>"
+        return 1
+    fi
+
+    # Import the key from a file
+    gpg --import "$key_file"
+    echo "GPG key imported from $key_file"
+}
+
+# Import a GPG secret key from a file
+function import_gpg_private_key() {
+    key_file="$1"
+    if [ -z "$key_file" ]; then
+        echo "Usage: import_gpg_key <key_file>"
+        return 1
+    fi
+
+    # Import the key from a file
+    gpg --import "$key_file"
+    echo "GPG key imported from $key_file"
+}
+
+# Import a GPG secret key from a paper key
+function import_gpg_private_key_paper() {
+    key_file="$1"
+    public_key_file="$2"
+    if [ -z "$key_file" ] || [ -z "$public_key_file" ]; then
+        echo "Usage: import_gpg_key_paper <key_file> <public_key_file>"
+        return 1
+    fi
+
+    # Import the key from a file
+    cat "$key_file" | paperkeywords -d | paperkey --pubring "$public_key_file" | gpg --import
+    echo "GPG key imported from paper key $key_file"
+}
+
+# Import a GPG secret key from QR codes
+function import_gpg_private_key_qr() {
+    pub_key_id="$1"
+    shift
+    qr_files=("$@")
+    if [ -z "$pub_key_id" ] || [ "${#qr_files[@]}" -eq 0 ]; then
+        echo "Usage: import_gpg_key_qr <pub_key_id> <qr_file_1> <qr_file_2> ..."
+        return 1
+    fi
+
+    for f in "${qr_files[@]}"; do
+        zbarimg --raw "$f" | head > "${f}.out"
+    done
+    public_key_file="$(mktemp)"
+    gpg --export "$pub_key_id" > "$public_key_file"
+    cat ./*.out | base64 -d | paperkey --pubring "$public_key_file" | gpg --import
+    rm ./*.out $public_key_file
+    echo "GPG key imported from QR codes ${qr_files[*]}"
 }
 
 # Restart a git branch (for when you're just stuck in rebase hell)

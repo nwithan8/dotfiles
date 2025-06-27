@@ -259,6 +259,7 @@ echo "Installing scripts to $SCRIPTS_DIR..."
 # Override existing files, don't worry about backing them up
 do_symlink_file "$REPO_LOCATION/scripts/bitwarden/bw_add_sshkeys.py" "$SCRIPTS_DIR/bw_add_sshkeys.py"
 do_symlink_file "$REPO_LOCATION/scripts/ntfy/ntfy_send.sh" "$SCRIPTS_DIR/ntfy_send.sh"
+do_symlink_file "$REPO_LOCATION/scripts/security/paperkeywords.py" "$SCRIPTS_DIR/paperkeywords.py"
 
 # Link plugins
 PLUGINS_DIR="$HOME/.bashrc_plugins"
