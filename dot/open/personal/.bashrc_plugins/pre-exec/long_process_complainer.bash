@@ -13,7 +13,7 @@ notify_about_long_running_commands() {
   stop=$(date +'%s')
   start=${PREEXEC_TIME:-$stop}
   let elapsed=$stop-$start
-  max=${PREEXEC_MAX:-10}
+  max=${PREEXEC_MAX:-90}
 
   if [ $elapsed -gt $max ]; then
     noti -t "Command ran for a while" -m "exited with status $exitstatus after $elapsed secs: ${PREEXEC_CMD:-Some command}"
