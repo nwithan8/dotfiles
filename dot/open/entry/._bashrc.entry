@@ -240,8 +240,7 @@ alias gpg-test='echo "test" | gpg --clearsign'
 
 ##
 # dev
-alias edithosts='sudo emacs /etc/hosts'
-alias rmemacsbackups='for FILE in `find . -name "*~"`; do rm -i $FILE; done'
+alias edithosts='sudo $EDITOR /etc/hosts'
 alias svns='svn status'
 
 ##
@@ -252,10 +251,6 @@ alias vipy='venv/bin/ipython'
 alias vpip='venv/bin/pip'
 alias vpy='venv/bin/python'
 alias vpytest='venv/bin/pytest'
-
-##
-# Emacs helpers
-alias rmelc='for FILE in `find . -name "*.elc"`; do rm -i $FILE; done'
 
 ##
 # Git

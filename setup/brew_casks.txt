@@ -2,7 +2,6 @@
 adoptopenjdk
 discord
 docker
-emacs
 freedom
 gimp
 git-credential-manager-core

@@ -47,8 +47,6 @@ function ssh-agent-init-no-keychain {
         ssh-agent -s > "${SSH_AGENT_FILENAME}"
         chmod a+x "${SSH_AGENT_FILENAME}"
         perl -i -n -e 'print $_ unless /^echo/' "${SSH_AGENT_FILENAME}"
-    else
-        echo 'SSH Agent already running'
     fi
 
     # finally, load the SSH agent env vars

@@ -23,16 +23,7 @@ if [[ -z `which 7z` ]];
 then
     alias 7z='/Applications/7za'
 fi
-alias editapache='sudo emacs /private/etc/apache2/users/`whoami`.conf'
-if [[ -z `which emacs` ]];
-then
-    if [[ -f /Applications/Emacs.app/Contents/MacOS/Emacs ]]
-    then
-        alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-    else
-        echo 'Graphical Emacs is not installed'
-    fi
-fi
+alias editapache='sudo $EDITOR /private/etc/apache2/users/`whoami`.conf'
 alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder'
 alias hidden_files_show='defaults write com.apple.finder AppleShowAllFiles TRUE;killall Finder'
 alias hidden_files_hide='defaults write com.apple.finder AppleShowAllFiles FALSE;killall Finder'
