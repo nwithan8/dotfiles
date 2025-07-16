@@ -48,6 +48,7 @@ neomutt
 node
 noti
 nvm
+justintime50/formulas/onepass
 openjdk
 openssl
 opus
