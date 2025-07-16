@@ -677,8 +677,3 @@ function _download_encrypted_transfer() {
 ####### Source plugins
 source "$HOME/.bashrc_plugins/pre-exec/.bash-preexec" # Load pre-exec plugins
 source "$HOME/.bashrc_plugins/pre-exec/long_process_complainer.bash" # Load long-running command growler
-
-
-####### Imports other bash files
-
-export BASHRC_GROUPS=''  # Bash entry will load a .bashrc.X file for each group

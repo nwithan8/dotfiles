@@ -443,6 +443,9 @@ alias code='cd ~/Documents/Code'
 # User .bashrc
 [[ -s "$HOME/.bashrc.$USER" ]] && source "$HOME/.bashrc.$USER"
 
+# Group Imports
+[[ -s "$HOME/.bashrc.group_imports" ]] && source "$HOME/.bashrc.group_imports"
+
 # Load various .bashrc.* customizations
 # Define BASHRC_GROUPS as an export in the .bashrc.$USER file
 for group in ${BASHRC_GROUPS}

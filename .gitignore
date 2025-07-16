@@ -7,3 +7,6 @@
 
 # Ignore IDEA (JetBrains) files
 .idea
+
+# Ignore auto-generated files
+/dot/open/.bashrc.group_imports

@@ -2,135 +2,7 @@
 
 REPO_LOCATION=$1
 
-DOT_FOLDER="$REPO_LOCATION/dot"
-SECRET_FOLDER="$DOT_FOLDER/secret"
-OPEN_FOLDER="$DOT_FOLDER/open"
-
-# Symlink files to their appropriate locations
-# Using symlinks instead of copying files allows for updates to this repo to be reflected on the user's system immediately
-
-do_backup_file() {
-  DEST_FILE=$1
-  BACKUP_SUFFIX="old"
-
-  # Backup existing file if it exists
-  if [ -f "$DEST_FILE" ]; then
-    echo "Backing up $DEST_FILE to $DEST_FILE.$BACKUP_SUFFIX"
-    mv "$DEST_FILE" "$DEST_FILE.$BACKUP_SUFFIX" || true # Potentially overwrite existing backup
-  fi
-}
-
-do_remove_symlink() {
-  DEST_FILE=$1
-
-  # Remove symlink if it exists
-  if [ -L "$DEST_FILE" ]; then
-    echo "Removing symlink $DEST_FILE"
-    rm "$DEST_FILE" || true
-  fi
-}
-
-do_symlink_file() {
-  SRC_FILE=$1
-  DEST_FILE=$2
-
-  # Verify SRC_FILE exists, skip if it doesn't
-  if [ ! -f "$SRC_FILE" ]; then
-    echo "Error: $SRC_FILE does not exist"
-    return 1
-  fi
-
-  DEST_FOLDER=$(dirname "$DEST_FILE")
-  mkdir -p "$DEST_FOLDER" || true
-
-  # Remove symlink if it exists
-  do_remove_symlink "$DEST_FILE"
-
-  # Symlink file
-  echo "Symlinking $SRC_FILE to $DEST_FILE"
-  ln -s "$SRC_FILE" "$DEST_FILE" || true
-}
-
-do_symlink_folder() {
-  SRC_FOLDER=$1
-  DEST_FOLDER=$2
-
-  # Create destination folder if it doesn't exist
-  mkdir -p "$DEST_FOLDER" || true
-
-  # Remove symlink if it exists
-  do_remove_symlink "$DEST_FOLDER"
-
-  # Symlink folder
-  echo "Symlinking $SRC_FOLDER to $DEST_FOLDER"
-  ln -s "$SRC_FOLDER" "$DEST_FOLDER" || true
-}
-
-do_symlink_folder_files_matching_pattern() {
-  SRC_FOLDER=$1
-  DEST_FOLDER=$2
-  PATTERN=$3
-
-  # Symlink files in folder
-  for file in "$SRC_FOLDER"/$PATTERN; do
-    FILE_NAME=$(basename "$file")
-    DEST_FILE="$DEST_FOLDER/$FILE_NAME"
-    do_symlink_file "$file" "$DEST_FILE"
-  done
-}
-
-do_symlink_folder_files() {
-  do_symlink_folder_files_matching_pattern "$1" "$2" "*"
-  do_symlink_folder_files_matching_pattern "$1" "$2" ".*"
-}
-
-do_symlink_folder_folders_matching_pattern() {
-  SRC_FOLDER=$1
-  DEST_FOLDER=$2
-  PATTERN=$3
-
-  # Symlink folders in folder
-  for folder in "$SRC_FOLDER"/$PATTERN; do
-    if [ -d "$folder" ]; then
-      echo "Found folder: $folder"
-      DEST_FOLDER_PATH="$DEST_FOLDER"
-      do_symlink_folder "$folder" "$DEST_FOLDER_PATH"
-    fi
-  done
-}
-
-do_symlink_folder_folders() {
-  do_symlink_folder_folders_matching_pattern "$1" "$2" "*"
-  do_symlink_folder_folders_matching_pattern "$1" "$2" ".*"
-}
-
-do_backup_and_symlink_file() {
-  SRC_FILE=$1
-  DEST_FILE=$2
-
-  # Backup file if it exists
-  do_backup_file "$DEST_FILE"
-
-  # Symlink file
-  do_symlink_file "$SRC_FILE" "$DEST_FILE"
-}
-
-do_backup_and_symlink_folder_files_matching_pattern() {
-  SRC_FOLDER=$1
-  DEST_FOLDER=$2
-  PATTERN=$3
-
-  # Backup and symlink files in folder
-  for file in "$SRC_FOLDER"/$PATTERN; do
-    FILE_NAME=$(basename "$file")
-    DEST_FILE="$DEST_FOLDER/$FILE_NAME"
-    do_backup_and_symlink_file "$file" "$DEST_FILE"
-  done
-}
-
-do_backup_and_symlink_folder_files() {
-  do_backup_and_symlink_folder_files_matching_pattern "$1" "$2" "*"
-}
+source "$REPO_LOCATION/setup/.files_helper"
 
 # Link secrets
 SECRETS_FILE_NAME=".dotfiles_secrets"
@@ -159,6 +31,10 @@ done
 USERNAME_BASHRC_FILE="$HOME/.bashrc.$(whoami)"
 rm "$USERNAME_BASHRC_FILE"
 do_symlink_file "$HOME/.bashrc.personal" "$USERNAME_BASHRC_FILE"
+# Link .bashrc.group_imports
+GROUP_IMPORTS_BASHRC_FILE="$HOME/.bashrc.group_imports"
+rm "$GROUP_IMPORTS_BASHRC_FILE"
+do_symlink_file "$REPO_LOCATION/dot/open/.bashrc.group_imports" "$GROUP_IMPORTS_BASHRC_FILE"
 
 # Install crontab
 # shellcheck disable=SC2016
@@ -172,7 +48,7 @@ echo "Setting up path utility folder..."
 mkdir -p "$PATH_UTILS_FOLDER" || true
 
 # Link git config
-GIT_CONFIG_FILE="$OPEN_FOLDER/personal/.gitconfig"
+GIT_CONFIG_FILE="$SECRET_FOLDER/personal/.gitconfig"
 echo "Installing git config..."
 do_backup_and_symlink_file "$GIT_CONFIG_FILE" "$HOME/.gitconfig"
 
@@ -189,7 +65,7 @@ do_backup_and_symlink_file "$GITHUB_COPILOT_BASHRC_FILE" "$HOME/.bashrc.copilot"
 # Link ssh config
 SSH_CONFIG_DIR="$HOME/.ssh"
 mkdir -p "$SSH_CONFIG_DIR" || true
-SSH_CONFIG_FILE="$SECRET_FOLDER/ssh_config"
+SSH_CONFIG_FILE="$SECRET_FOLDER/personal/ssh_config"
 echo "Installing ssh config..."
 do_backup_and_symlink_file "$SSH_CONFIG_FILE" "$SSH_CONFIG_DIR/config"
 

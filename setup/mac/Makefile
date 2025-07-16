@@ -128,6 +128,16 @@ clone_repos:
 post_install_tweaks:
 	sh ./mac_post_install_tweaks.sh
 
+## work_install_easypost - Install EasyPost-related tools
+work_install_easypost:
+	sh ../work/install_easypost.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+
+## work_install_paymentworks - Install PaymentWorks-related tools
+work_install_paymentworks:
+	sh ../work/install_paymentworks.sh "$(shell pwd)/../.." # This works because the user has to be in the mac directory to run this command
+
+
+
 .PHONY: all help install_bash_profile install_brew set_up_extras install_dotfiles install_git install_github set_up_gpg install_ides install_jetbrains set_up_ssh_keys install_langs install_dotnet install_node install_python install_ruby install_go install_java install_php install_microsoft clone_repos set_up_shell decrypt_private_files
 
 
