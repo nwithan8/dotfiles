@@ -23,11 +23,17 @@ eval "$(mkdir -p ~/.Trash)" # This folder already exists on MacOS
 ####### Load modules and plugins
 
 # Load bash completion scripts
-for script in /etc/bash_completion.d/*; do
-    [[ -r "$script" ]] && . "$script";
+for script in "/etc/bash_completion.d"/*; do
+    [[ -f "$script" ]] && source "$script";
 done;
-for script in $HOME/.completion.d/**/*; do
-    [[ -r "$script" ]] && . "$script";
+for script in "/etc/bash_completion.d"/.*; do
+    [[ -f "$script" ]] && source "$script";
+done;
+for script in "$HOME/.completion.d"/**/*; do
+    [[ -f "$script" ]] && source "$script";
+done;
+for script in "$HOME/.completion.d"/**/.*; do
+    [[ -f "$script" ]] && source "$script";
 done;
 
 # Load scripts
