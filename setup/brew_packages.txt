@@ -45,6 +45,7 @@ mvn
 mysql
 nano
 neomutt
+nmap
 node
 noti
 nvm

@@ -122,6 +122,9 @@ alias web='lynx'
 alias rtv="pyenv shell 3.10 && python3 -m pip install rtv && python3 -m rtv"
 alias reddit="rtv"
 
+# Better du
+alias dirsize="du -sh * | sort -k1 -h"
+
 ####### Shell Completion
 
 # Makefile
@@ -567,6 +570,13 @@ function ask_copilot() {
     fi
 
     gh copilot explain "$prompt:\n$input"
+}
+
+# View GitHub PR files
+function gh_pr_files() {
+    pr_number="$1"
+    
+    gh pr view $pr_number --json files --jq '.files.[].path'
 }
 
 ####### Internal functions (call indirectly)

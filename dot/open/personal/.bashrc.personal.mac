@@ -54,6 +54,8 @@ alias paste="pbpaste" # Paste from clipboard
 
 alias nano="/opt/homebrew/bin/nano" # Use Homebrew nano
 
+alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+
 alias java7='export JAVA_HOME=$JAVA_7_HOME'
 alias java8='export JAVA_HOME=$JAVA_8_HOME'
 alias java9='export JAVA_HOME=$JAVA_9_HOME'

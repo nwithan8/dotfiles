@@ -8,6 +8,7 @@ git-credential-manager-core
 handbrake
 iterm2
 makemkv
+meteor
 obsidian
 postman
 powershell
