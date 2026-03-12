@@ -40,7 +40,6 @@ localsend
 lua
 lunar
 lynx
-meteor
 mvn
 mysql
 nano

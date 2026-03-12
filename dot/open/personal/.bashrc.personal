@@ -12,6 +12,9 @@ eval export $(cat "$HOME/.dotfiles_secrets") || true # Load secrets from .dotfil
 export EDITOR=nano
 export SVN_EDITOR=nano
 
+# Silence Homebrew
+export HOMEBREW_NO_ENV_HINTS=1
+
 
 ####### Set up folders and files
 
@@ -38,6 +41,9 @@ done;
 
 # Load scripts
 export DOTSCRIPTS="$HOME/.scripts"
+
+# Load zoxide
+eval "$(zoxide init bash)"
 
 # Load pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -66,9 +72,6 @@ export PATH=$PATH:$GOPATH/bin
 
 # Load cargo
 export PATH="$HOME/.cargo/bin:$PATH"
-
-# Load zoxide
-eval "$(zoxide init bash)"
 
 ####### Start Up
 # Cow fortune rainbow
